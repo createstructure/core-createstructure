@@ -10,12 +10,12 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Publish to Registry
+      pre: echo ::save-state name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
         name: createstructure/core-createstructure/core
         username: DavideC03
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
-        tags: "latest"
-        tag_semver: true
+        tags: "latest,${{ env.STATE_RELEASE_VERSION }}"
         
