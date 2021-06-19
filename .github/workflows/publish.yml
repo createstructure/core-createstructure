@@ -2,6 +2,7 @@ name: Publish Docker
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -15,4 +16,6 @@ jobs:
         username: DavideC03
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
+        tags: "latest"
         tag_semver: true
+        
