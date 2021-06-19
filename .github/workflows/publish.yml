@@ -5,17 +5,27 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  latest:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
-      env:
-        STATE_RELEASE_VERSION: $(echo ${GITHUB_REF:10})
       with:
         name: createstructure/core-createstructure/core
         username: DavideC03
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
-        tags: "latest,${{ env.STATE_RELEASE_VERSION }}"
+        
+  version:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Publish to Registry
+      uses: elgohr/Publish-Docker-Github-Action@master
+      with:
+        name: createstructure/core-createstructure/core
+        username: DavideC03
+        password: ${{ secrets.GITHUB_TOKEN }}
+        registry: docker.pkg.github.com
+        tag_semver: true
