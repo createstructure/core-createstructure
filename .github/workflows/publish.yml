@@ -7,6 +7,9 @@ on:
 jobs:
   latest:
     runs-on: ubuntu-latest
+    environment:
+      name: Docker-latest
+      url: https://github.com/createstructure/core-createstructure/packages/856124
     steps:
     - uses: actions/checkout@master
     - name: Publish to Registry
@@ -19,6 +22,9 @@ jobs:
         
   version:
     runs-on: ubuntu-latest
+    environment:
+      name: Docker-version
+      url: https://github.com/createstructure/core-createstructure/packages/856124
     steps:
     - uses: actions/checkout@master
     - name: Publish to Registry
