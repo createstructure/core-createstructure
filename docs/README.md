@@ -5,19 +5,19 @@
 ![sys.platform supported](https://img.shields.io/badge/OS%20platform%20supported-Linux-blue?style=flat)
 [![On GitHub](https://img.shields.io/badge/on%20GitHub-True-green?style=flat&logo=github)](https://github.com/createstructure/core-createstructure)
 
-## Table of content
+## Table of contents
 - [corecreatestructure](#corecreatestructure)
-  - [Table of content](#table-of-content)
+  - [Table of contents](#table-of-contents)
   - [Description](#description)
   - [Directories structure](#directories-structure)
   - [Installation](#installation)
     - [Requirements](#requirements)
-    - [Installation](#installation-1)
+    - [Pull](#pull)
     - [Execution examples](#execution-examples)
   - [Repo dependencies](#repo-dependencies)
 
 ## Description
-Repo where there is the docker source to be runned by the managercreatestructure
+Repo where there is the docker source to be run by the manager-createstructure
 
 ## Directories structure
 ```
@@ -55,7 +55,7 @@ Repo where there is the docker source to be runned by the managercreatestructure
 ### Requirements
  - Docker
  
-### Installation
+### Pull
  - `docker pull docker.pkg.github.com/createstructure/core-createstructure/core`
 
 ### Execution examples
