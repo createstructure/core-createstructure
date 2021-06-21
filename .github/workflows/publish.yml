@@ -19,7 +19,6 @@ jobs:
         username: DavideC03
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
-        buildoptions: "--platform linux/amd64,linux/arm64"
         
   version:
     runs-on: ubuntu-latest
@@ -36,4 +35,3 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
         tag_semver: true
-        buildoptions: "--platform linux/amd64,linux/arm64"
