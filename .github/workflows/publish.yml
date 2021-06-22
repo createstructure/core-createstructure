@@ -29,11 +29,11 @@ jobs:
           sudo apt-get install docker-ce docker-ce-cli containerd.io
     - name: Prepare docker
       run: |
-        echo ${{ secrets.GITHUB_TOKEN }} | docker login -u $GITHUB_ACTOR --password-stdin docker.pkg.github.com
+        echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
         docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
         docker buildx create --use
         docker buildx inspect --bootstrap 
     - name: Build and push docker for any platform
       run: |
-        docker buildx build -t docker.pkg.github.com/createstructure/core-createstructure/core:latest --platform=linux/arm64,linux/amd64 . --push
+        docker buildx build -t docker.pkg.github.com/createstructure/core-createstructure/core:latest --platform=linux/amd64,linux/arm64,linux/riscv64,linux/ppc64le,linux/386,linux/arm/v7,linux/arm/v6,linux/s390x . --push
         
