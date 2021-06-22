@@ -39,6 +39,6 @@ jobs:
         docker buildx inspect --bootstrap 
     - name: Build and push docker for any platform
       run: |
-        docker buildx build -t docker.pkg.github.com/createstructure/core-createstructure/core:latest --platform=linux/amd64,linux/arm64,linux/riscv64,linux/ppc64le,linux/s390x,linux/386,linux/arm/v7,linux/arm/v6 .
+        docker buildx build -t docker.pkg.github.com/createstructure/core-createstructure/core:latest --platform=linux/amd64,linux/arm64,linux/ppc64le,linux/s390x,linux/arm/v7 .
         docker push docker.pkg.github.com/createstructure/core-createstructure/core:latest
         
