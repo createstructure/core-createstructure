@@ -1,4 +1,4 @@
-# corecreatestructure
+# core-createstructure
 [![GitHub license](https://img.shields.io/badge/license-GNU-green?style=flat)](https://github.com/CastellaniDavide/corecreatestructure-corecreatestructure/blob/master/LICENSE)
 ![Author](https://img.shields.io/badge/author-Castellani%20Davide-green?style=flat)
 ![Language C++, Docker](https://img.shields.io/badge/language-C++,%20Docker-yellowgreen?style=flat)
@@ -6,7 +6,7 @@
 [![On GitHub](https://img.shields.io/badge/on%20GitHub-True-green?style=flat&logo=github)](https://github.com/createstructure/core-createstructure)
 
 ## Table of contents
-- [corecreatestructure](#corecreatestructure)
+- [core-createstructure](#core-createstructure)
   - [Table of contents](#table-of-contents)
   - [Description](#description)
   - [Directories structure](#directories-structure)
