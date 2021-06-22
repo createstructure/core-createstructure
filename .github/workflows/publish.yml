@@ -30,6 +30,7 @@ jobs:
     - name: Prepare docker
       run: |
         echo ${{ secrets.GITHUB_TOKEN }} | docker login -u $GITHUB_ACTOR --password-stdin docker.pkg.github.com
+        docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
         docker buildx inspect --bootstrap 
     - name: Build and push docker for any platform
       run: |
