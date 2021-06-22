@@ -40,10 +40,10 @@ jobs:
         MINOR=$(echo $PATCH | sed 's/\.[^.]*$//')
         MAJOR=$(echo $MINOR | sed 's/\.[^.]*$//')
         docker buildx build \
-          -t ghcr.io/createstructure/core-createstructure:latest \
-          -t ghcr.io/createstructure/core-createstructure:$PATCH \
-          -t ghcr.io/createstructure/core-createstructure:$MINOR \
           -t ghcr.io/createstructure/core-createstructure:$MAJOR \
+          -t ghcr.io/createstructure/core-createstructure:$MINOR \
+          -t ghcr.io/createstructure/core-createstructure:$PATCH \
+          -t ghcr.io/createstructure/core-createstructure:latest \
           --platform=linux/amd64,linux/arm64 \
           --push \
           .
