@@ -29,12 +29,9 @@ jobs:
           sudo apt-get install docker-ce docker-ce-cli containerd.io
     - name: Prepare docker
       run: |
+        echo ${{ secrets.GITHUB_TOKEN }} | docker login -u $GITHUB_ACTOR --password-stdin docker.pkg.github.com
         docker buildx install
-        docker buildx ls
-        #docker buildx create --use --name mybuild node-amd64
-        #docker buildx create --append --name mybuild node-arm64
-        docker buildx ls
-    - name: Build for any platform
+    - name: Build and push docker for any platform
       run: |
-        docker buildx build -t docker.pkg.github.com/createstructure/core-createstructure/core:latest --platform=linux/amd64 .
+        docker buildx build -t docker.pkg.github.com/createstructure/core-createstructure/core:latest --platform=linux/arm,linux/arm64,linux/amd64 . --push
         
