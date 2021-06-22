@@ -29,9 +29,10 @@ jobs:
           sudo apt-get install docker-ce docker-ce-cli containerd.io
     - name: Prepare docker
       run: |
-        docker context ls
+        docker buildx ls
         docker buildx create --use --name mybuild node-amd64
         docker buildx create --append --name mybuild node-arm64
+        docker buildx ls
     - name: Build for any platform
       run: |
         docker buildx build -t docker.pkg.github.com/createstructure/core-createstructure/core:latest --platform=linux/amd64 . --push
