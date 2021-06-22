@@ -8,13 +8,13 @@ COPY ./bin /usr/src/createstructure
 WORKDIR /usr/src/createstructure
 
 # Install requirements
-RUN apt install g++ libssl-dev libcurl4-openssl-dev -y
+RUN apt-get install build-essential libssl-dev libcurl4-openssl-dev -y
 
 # Use GCC to compile the source file
 RUN g++ core.cpp -o core -lcurl -lcrypto
 
 # Setup git
-RUN apt install git -y
+RUN apt-get install git -y
 RUN git config --global user.email "contacts@castellanidavide.it"
 RUN git config --global user.name "createstructure"
 RUN git config --global init.defaultBranch "main"
