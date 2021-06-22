@@ -36,9 +36,10 @@ jobs:
         echo ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
         docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
         docker buildx create --use
-        docker buildx inspect --bootstrap 
+        docker buildx inspect --bootstrap
     - name: Build and push docker for any platform
       run: |
         docker buildx build -t docker.pkg.github.com/createstructure/core-createstructure/core:latest --platform=linux/amd64,linux/arm64 .
+        docker image ls -a
         docker push docker.pkg.github.com/createstructure/core-createstructure/core:latest
         
