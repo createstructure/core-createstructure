@@ -31,7 +31,7 @@ jobs:
       run: |
         docker buildx install
         docker buildx ls
-        docker buildx create --use --name mybuild node-amd64
+        #docker buildx create --use --name mybuild node-amd64
         #docker buildx create --append --name mybuild node-arm64
         docker buildx ls
     - name: Build for any platform
