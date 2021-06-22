@@ -12,7 +12,7 @@ RUN apt-get update
 RUN apt-get install build-essential libssl-dev libcurl4-openssl-dev -y
 
 # Use GCC to compile the source file
-RUN g++ core.cpp -o core -lcurl -lcrypto
+RUN g++ core.cpp -o core -std=c++17 -lcurl -lcrypto
 
 # Setup git
 RUN apt-get install git -y
