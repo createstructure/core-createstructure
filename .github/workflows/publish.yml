@@ -33,5 +33,5 @@ jobs:
         docker buildx create --append --name mybuild node-arm64
     - name: Build for any platform
       run: |
-        docker buildx build -t docker.pkg.github.com/createstructure/core-createstructure/core:latest --platform=linux/arm,linux/amd64,linux/arm64 . --push
+        docker buildx build -t docker.pkg.github.com/createstructure/core-createstructure/core:latest --platform=linux/arm,linux/amd64 . --push
         
