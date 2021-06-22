@@ -8,6 +8,7 @@ COPY ./bin /usr/src/createstructure
 WORKDIR /usr/src/createstructure
 
 # Install requirements
+RUN apt-get update
 RUN apt-get install build-essential libssl-dev libcurl4-openssl-dev -y
 
 # Use GCC to compile the source file
