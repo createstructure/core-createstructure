@@ -8,8 +8,8 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     environment:
-      name: Docker-latest
-      url: https://github.com/createstructure/core-createstructure/packages/856124
+      name: Docker
+      url: https://github.com/createstructure/core-createstructure/pkgs/container/core-createstructure
     steps:
     - uses: actions/checkout@v2
     - name: Install docker
@@ -28,10 +28,6 @@ jobs:
             $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
           sudo apt-get update
           sudo apt-get install docker-ce docker-ce-cli containerd.io
-    - name: Set up QEMU
-      uses: docker/setup-qemu-action@v1
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
     - name: Prepare docker
       run: |
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
@@ -40,9 +36,9 @@ jobs:
         docker buildx inspect --bootstrap
     - name: Build and push docker for any platform
       run: |
-        $PATCH=$(curl -s "https://api.github.com/repos/createstructure/core-createstructure/releases/latest" | jq -r '.tag_name')
-        $MINOR=$(echo $PATCH | sed 's/\.[^.]*$//')
-        $MAJOR=$(echo $MINOR | sed 's/\.[^.]*$//')
+        PATCH=$(curl -s "https://api.github.com/repos/createstructure/core-createstructure/releases/latest" | jq -r '.tag_name')
+        MINOR=$(echo $PATCH | sed 's/\.[^.]*$//')
+        MAJOR=$(echo $MINOR | sed 's/\.[^.]*$//')
         docker buildx build \
           -t ghcr.io/createstructure/core-createstructure:latest \
           -t ghcr.io/createstructure/core-createstructure:$PATCH \
