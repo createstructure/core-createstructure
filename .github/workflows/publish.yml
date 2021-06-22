@@ -30,7 +30,7 @@ jobs:
     - name: Prepare docker
       run: |
         echo ${{ secrets.GITHUB_TOKEN }} | docker login -u $GITHUB_ACTOR --password-stdin docker.pkg.github.com
-        docker buildx inspect --bootstrap
+        docker buildx inspect --bootstrap 
     - name: Build and push docker for any platform
       run: |
         docker buildx build -t docker.pkg.github.com/createstructure/core-createstructure/core:latest --platform=linux/arm,linux/arm64,linux/amd64 . --push
