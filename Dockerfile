@@ -1,14 +1,14 @@
 # Get the ubuntu image from Docker Hub
 FROM ubuntu:latest
 
-# Install requirements
-RUN apt install g++ libssl-dev libcurl4-openssl-dev
-
 # Copy the current folder which contains C++ source code to the Docker image under /usr/src
 COPY ./bin /usr/src/createstructure
 
 # Specify the working directory
 WORKDIR /usr/src/createstructure
+
+# Install requirements
+RUN apt install g++ libssl-dev libcurl4-openssl-dev -y
 
 # Use GCC to compile the source file
 RUN g++ core.cpp -o core -lcurl -lcrypto
