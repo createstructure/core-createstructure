@@ -5,33 +5,17 @@ on:
   workflow_dispatch:
 
 jobs:
-  latest:
+  docker:
     runs-on: ubuntu-latest
     environment:
       name: Docker-latest
       url: https://github.com/createstructure/core-createstructure/packages/856124
     steps:
-    - uses: actions/checkout@master
-    - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@master
-      with:
-        name: createstructure/core-createstructure/core
-        username: DavideC03
-        password: ${{ secrets.GITHUB_TOKEN }}
-        registry: docker.pkg.github.com
+    - uses: actions/checkout@v2
+    - name: Install docker
+      run: |
+        sudo apt install docker.io -y
+    - name: Build for any platform
+      run: |
+        docker buildx build --platform linux/amd64,linux/arm64 .
         
-  version:
-    runs-on: ubuntu-latest
-    environment:
-      name: Docker-version
-      url: https://github.com/createstructure/core-createstructure/packages/856124
-    steps:
-    - uses: actions/checkout@master
-    - name: Publish to Registry
-      uses: elgohr/Publish-Docker-Github-Action@master
-      with:
-        name: createstructure/core-createstructure/core
-        username: DavideC03
-        password: ${{ secrets.GITHUB_TOKEN }}
-        registry: docker.pkg.github.com
-        tag_semver: true
