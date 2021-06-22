@@ -56,10 +56,10 @@ Repo where there is the docker source to be run by the manager-createstructure
  - Docker
  
 ### Pull
- - `docker pull docker.pkg.github.com/createstructure/core-createstructure/core`
+ - `docker pull ghcr.io/createstructure/core-createstructure`
 
 ### Execution examples
- - `docker run docker.pkg.github.com/createstructure/core-createstructure/core`
+ - `docker run ghcr.io/createstructure/core-createstructure`
 
 ## Repo dependencies
  - [nlohmann/json](https://github.com/nlohmann/json)
