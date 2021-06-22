@@ -36,5 +36,5 @@ jobs:
         docker buildx ls
     - name: Build for any platform
       run: |
-        docker buildx build -t docker.pkg.github.com/createstructure/core-createstructure/core:latest --platform=linux/amd64 . --push
+        DOCKER_BUILDKIT=1 docker buildx build -t docker.pkg.github.com/createstructure/core-createstructure/core:latest --platform=linux/amd64 .
         
