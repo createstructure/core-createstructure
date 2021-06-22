@@ -20,7 +20,8 @@ jobs:
             ca-certificates \
             curl \
             gnupg \
-            lsb-release
+            lsb-release \
+            jq
           curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
           echo \
             "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
@@ -39,5 +40,14 @@ jobs:
         docker buildx inspect --bootstrap
     - name: Build and push docker for any platform
       run: |
-        docker buildx build -t ghcr.io/createstructure/core-createstructure:latest --platform=linux/amd64,linux/arm64 --push .
-        
+        $PATCH=$(curl -s "https://api.github.com/repos/createstructure/core-createstructure/releases/latest" | jq -r '.tag_name')
+        $MINOR=$(echo $PATCH | sed 's/\.[^.]*$//')
+        $MAJOR=$(echo $MINOR | sed 's/\.[^.]*$//')
+        docker buildx build \
+          -t ghcr.io/createstructure/core-createstructure:latest \
+          -t ghcr.io/createstructure/core-createstructure:$PATCH \
+          -t ghcr.io/createstructure/core-createstructure:$MINOR \
+          -t ghcr.io/createstructure/core-createstructure:$MAJOR \
+          --platform=linux/amd64,linux/arm64 \
+          --push \
+          .
