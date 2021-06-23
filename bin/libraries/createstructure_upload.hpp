@@ -37,7 +37,7 @@ void upload(string link, string pos) {
 		string("git commit -m \"createstructure\"; ") +
 		string("git push ") +
 		link +
-                string(" -u main --set-upstream --force")
+                string(" HEAD:main --set-upstream --force")
         ).c_str());
 
 }
