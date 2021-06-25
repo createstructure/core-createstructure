@@ -12,6 +12,8 @@ jobs:
       url: https://github.com/createstructure/core-createstructure/pkgs/container/core-createstructure
     steps:
     - uses: actions/checkout@v2
+    - name: Get submodules
+      run: git submodule update --init
     - name: Install docker
       run: |
          sudo apt-get update; sudo apt-get upgrade
