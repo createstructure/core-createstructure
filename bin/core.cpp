@@ -1,7 +1,7 @@
 // Dependencies
 #include <bits/stdc++.h>
-#include "libraries/json.hpp"
-#include "libraries/createstructure.hpp"
+#include "libraries/bin/json.hpp"
+#include "libraries/bin/createstructure.hpp"
 
 // using ...
 using namespace std;
