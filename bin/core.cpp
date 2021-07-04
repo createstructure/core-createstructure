@@ -79,8 +79,45 @@ int main(int argc, char *argv[]) {
 #endif // DEBUG
 
 		json o;
-		o["name"] = inputs["answers"]["name"].get<string>();
+		o["name"] = (
+						inputs["answers"]["prefix"].get<string>() 
+						== "" 
+					) ?
+						inputs["answers"]["name"].get<string>() :
+						inputs["answers"]["prefix"].get<string>() +
+							"-" +
+							inputs["answers"]["name"].get<string>();
 		o["description"] = inputs["answers"]["descr"].get<string>();
+		o["private"] = inputs["answers"]["private"].get<bool>();
+
+		if (
+				inputs["answers"]["isOrg"].get<bool>() &&
+				inputs["answers"]["team"].get<string>() != "")
+			{
+				string teamLink = string("https:\u002F\u002Fapi.github.com/orgs/") +
+										inputs["answers"]["org"].get<string>() +
+										"/teams";
+
+				json teams = jsonRequest(teamLink, inputs["token"].get<string>(), nullptr, "");
+				
+				long long int teamId = -1;
+				for (auto& [key, value] : teams.items()) {
+					if (value["name"].get<string>() == inputs["answers"]["team"].get<string>())
+						teamId = value["id"].get<long long int>();
+				}
+				
+				if (teamId == -1)
+				{
+					json teamInfo;
+					teamInfo["name"] = inputs["answers"]["team"].get<string>();
+					teamInfo["description"] = "Team made automatically by createstructure.";
+
+					json team = jsonRequest(teamLink, inputs["token"].get<string>(), teamInfo, "POST");
+					teamId = team["id"].get<long long int>();
+				}
+
+				o["team_id"] = teamId;
+			}
 
 		string link = string("https:\u002F\u002Fapi.github.com/") +
 				(inputs["answers"]["isOrg"].get<bool>() ?
