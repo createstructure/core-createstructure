@@ -136,7 +136,7 @@ int main(int argc, char *argv[]) {
 				inputs["answers"]["org"].get<string>() :
 				inputs["username"].get<string>()) +
                         string("/") +
-                        inputs["answers"]["name"].get<string>(),
+                        o["name"].get<string>(),
 
 			string("/media/createstructure/") +
 			inputs["username"].get<string>() +
