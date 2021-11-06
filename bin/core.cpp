@@ -1,21 +1,26 @@
 // Dependencies
 #include <bits/stdc++.h>
-#include "libraries/bin/json.hpp"
+#include "global-libraries/bin/json.hpp"
+#include "global-libraries/bin/rest.hpp"
+#include "local-libraries/inputCheck.hpp"
+#include "local-libraries/workload.hpp"
+
 //#include "libraries/bin/createstructure.hpp"
-#include "libraries/bin/createstructure_emoji.hpp"
+/*#include "libraries/bin/createstructure_emoji.hpp"
 #include "libraries/bin/createstructure_inputCheck.hpp"
 #include "libraries/bin/createstructure_download.hpp"
 #include "libraries/bin/createstructure_chooseTemplate.hpp"
 #include "libraries/bin/createstructure_elaborate.hpp"
 #include "libraries/bin/createstructure_changes.hpp"
 #include "libraries/bin/createstructure_upload.hpp"
+*/
 
 // using ...
 using namespace std;
 using json = nlohmann::json;
 
 // Definitions
-#define DEBUG
+// #define DEBUG
 
 // Declared functions
 int main(int argc, char *argv[]);
@@ -23,14 +28,12 @@ int main(int argc, char *argv[]);
 // Code
 int main(int argc, char *argv[])
 {
-	/* Main: the start point of the code
+	/**
+	 * Main: the start point of the code
 	 *
-	 * inputs:
-	 * 	- argc: the number of command-line arguments
-	 *	- argv: an array containing all command-line arguments
-	 *
-	 * output:
-	 *	- a run code: if it works in the correct way it will return 0
+	 * @param argc: number of arguments passed by command-line
+	 * @param argv: array of arguments passed by command-line
+	 * @return: 0 if the program ends successfully
 	 */
 	// Function viariable(s)
 	json inputs;
@@ -39,13 +42,49 @@ int main(int argc, char *argv[])
 	// Assert the correct number of inputs
 	assert(argc == 2); // name_of_program data(json)
 
-	// Get the given input data
+	// Save the given input data
 	inputs = json::parse(string(argv[1]));
-
 #ifdef DEBUG
 	cout << inputs.dump() << endl;
 #endif // DEBUG
 
+	// Check the input data
+	inputs = InputCheck(inputs).sanitize();
+#ifdef DEBUG
+	cout << inputs.dump() << endl;
+#endif // DEBUG
+
+	Workload workload = Workload(inputs);
+	json workloadData;
+
+	int i = 0;
+	while (i == 0)
+	{
+		// Take the workload
+		workloadData = workload.getWorkload();
+
+		// Elaborate the job
+		switch (workloadData["type"].get<int>())
+		{
+			case 0:
+				// Run priority
+				cout << "Priority: " << workloadData.dump(4) << endl;
+				break;
+			case 1:
+				// Create a repo
+				cout << "Create repo: " << workloadData.dump(4) << endl;
+				break;
+			case 2:
+			default:
+				// Do nothing
+				cout << "Do nothing: " << workloadData.dump(4) << endl;
+				break;
+		}
+
+		i++;
+	}
+
+	/*
 	if (inputCheck(inputs))
 	{
 
@@ -162,6 +201,7 @@ int main(int argc, char *argv[])
 	{
 		cout << "Given uncorrect data " << getEmoji("sad") << endl;
 	}
+	*/
 
 	return 0;
 }
