@@ -57,15 +57,12 @@ int main(int argc, char *argv[])
 	cout << inputs.dump() << endl;
 #endif // DEBUG
 
-	Workload workload = Workload(inputs);
 	Priority priority = Priority(inputs);
-	Repo *repo = NULL;
-	json workloadData;
 
 	while (true)
 	{
 		// Take the workload
-		workloadData = workload.getWorkload();
+		json workloadData = Workload::getWorkload(inputs);
 
 		// Elaborate the job
 		switch (workloadData["type"].get<int>())
@@ -81,14 +78,9 @@ int main(int argc, char *argv[])
 // Create a repo
 #ifdef DEBUG
 			cout << "Creating a repo: " << workloadData.dump(4) << endl;
-			repo = (new Repo(workloadData["workload"]));
-			repo->create();
-			repo->remove();
-			repo->download();
-			repo->elaborate();
-			//repo->remove();
-			return 0;
 #endif // DEBUG
+			Repo::all(workloadData["workload"]);
+			return 0;
 			break;
 		case 2:
 		default:

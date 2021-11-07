@@ -21,7 +21,7 @@ using namespace std;
 using json = nlohmann::json;
 
 // Definitions
-#define DEBUG
+// #define DEBUG
 
 // Classes prototype(s)
 class GetUploadURL {

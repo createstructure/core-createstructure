@@ -31,19 +31,23 @@ private:
 	json data;
 	string path;
 	tm *date;
+	vector<pair<string, string>> changes;
 
 	string getDate(string pattern);
 	vector<pair<string, string>> getChanges();
 	vector<pair<string, string>> getSpecialChanges();
 	string replace(string original, vector<pair<string, string>> changes);
+
 public:
 	Repo(json data);
+	void all();
 	void download();
 	void create();
 	void elaborate();
 	void upload();
 	void remove();
 
+	static void all(json data);
 	static void download(json data);
 	static void create(json data);
 	static void elaborate(json data);
@@ -75,6 +79,37 @@ Repo::Repo(json data)
 	time_t rawtime;
 	time(&rawtime);
 	Repo::date = localtime(&rawtime);
+	Repo::changes = Repo::getChanges();
+}
+
+void Repo::all()
+{
+	/**
+	 * Method for downloading, creating, elaborating and uploading the repository.
+	 */
+#ifdef DEBUG
+	cout << "Repo::all()" << endl;
+#endif // DEBUG
+	Repo::download();
+#ifdef DEBUG
+	cout << "Downloaded" << endl;
+#endif // DEBUG
+	Repo::create();
+#ifdef DEBUG
+	cout << "Created" << endl;
+#endif // DEBUG
+	Repo::elaborate();
+#ifdef DEBUG
+	cout << "Elaborated" << endl;
+#endif // DEBUG
+	Repo::upload();
+#ifdef DEBUG
+	cout << "Uploaded" << endl;
+#endif // DEBUG
+	Repo::remove();
+#ifdef DEBUG
+	cout << "Removed" << endl;
+#endif // DEBUG
 }
 
 void Repo::download()
@@ -161,7 +196,30 @@ void Repo::elaborate()
 	/**
 	 * Elaborate the repository
 	 */
-	Repo::getChanges();
+	for (const auto &file : filesystem::recursive_directory_iterator(path))
+	{
+		if (filesystem::is_regular_file(filesystem::status(file.path())))
+		{
+			// Get original
+			ifstream t(file.path());
+			string old((istreambuf_iterator<char>(t)), istreambuf_iterator<char>());
+
+			// Put the changed content in the same folder
+			ofstream f(file.path());
+			f << replace(old, Repo::changes);
+
+			// Check if the file name will become different from the original
+			string new_path(replace(file.path(), Repo::changes));
+			if (new_path.compare(file.path()) != 0)
+			{
+				// Create new directory tree
+				filesystem::create_directories(((filesystem::path)new_path).remove_filename());
+
+				// Rename file
+				filesystem::rename(file.path().c_str(), new_path.c_str());
+			}
+		}
+	}
 }
 
 void Repo::upload()
@@ -178,6 +236,16 @@ void Repo::remove()
 	 * Remove the repository
 	 */
 	system(("rm -rf " + Repo::path).c_str());
+}
+
+void Repo::all(json data)
+{
+	/**
+	 * Method for downloading, creating, elaborating and uploading the repository.
+	 * 
+	 * @param data The data to be used for the repository.
+	 */
+	Repo(data).all();
 }
 
 void Repo::download(json data)
@@ -282,6 +350,8 @@ vector<pair<string, string>> Repo::getChanges()
 		cout << "- " << key << ": " << value << endl;
 	cout << endl;
 #endif // DEBUG
+
+	return changes;
 }
 
 vector<pair<string, string>> Repo::getSpecialChanges()
@@ -393,4 +463,5 @@ string Repo::replace(string original, vector<pair<string, string>> changes)
 	// Give back the changed string
 	return original;
 }
+
 #endif
