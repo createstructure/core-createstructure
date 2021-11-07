@@ -140,4 +140,5 @@ string GetTemplate::get(json repoInfo) {
 	return GetTemplate(repoInfo).get();
 }
 
+#undef DEBUG
 #endif

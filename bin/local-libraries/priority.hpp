@@ -38,6 +38,7 @@ public:
 	void execute(string priorityType, int id);
 
 	static void execute(json settings, string priorityType, int id);
+	static void execute(json settings, string priorityType);
 };
 
 // Function(s)
@@ -97,7 +98,7 @@ void Priority::execute(string priorityName, int id)
 	}
 }
 
-void execute(json settings, string priorityType, int id)
+void Priority::execute(json settings, string priorityType, int id)
 {
 	/**
 	 * Execute the priority queue
@@ -106,7 +107,8 @@ void execute(json settings, string priorityType, int id)
 	 * @param priorityType - name of the priority queue
 	 * @param id - id of the process
 	 */
-
 	Priority(settings).execute(priorityType, id);
 }
+
+#undef DEBUG
 #endif

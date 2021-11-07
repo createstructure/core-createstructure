@@ -79,7 +79,6 @@ Repo::Repo(json data)
 	time_t rawtime;
 	time(&rawtime);
 	Repo::date = localtime(&rawtime);
-	Repo::changes = Repo::getChanges();
 }
 
 void Repo::all()
@@ -118,6 +117,7 @@ void Repo::download()
 	 * Download the repository
 	 */
 	system(("git clone " + GetTemplate::get(Repo::data) + " " + Repo::path).c_str());
+	Repo::changes = Repo::getChanges();
 }
 
 void Repo::create()
@@ -126,9 +126,7 @@ void Repo::create()
 	 * Create the repository
 	 */
 	json request = {
-		{"username", Repo::data["username"].get<string>()},
-		{"name", (
-					 Repo::data["answers"]["prefix"].get<string>() == "" ? Repo::data["username"].get<string>() : Repo::data["answers"]["prefix"].get<string>() + Repo::data["answers"]["name"].get<string>())},
+		{"name", (Repo::data["answers"]["prefix"].get<string>() == "" ? Repo::data["answers"]["name"].get<string>() : Repo::data["answers"]["prefix"].get<string>() + Repo::data["answers"]["name"].get<string>())},
 		{"description", Repo::data["answers"]["descr"].get<string>()},
 		{"private", Repo::data["answers"]["private"].get<bool>()}};
 
@@ -157,15 +155,15 @@ void Repo::create()
 
 		if (teamID == -1)
 		{
-			json request = {{"name", Repo::data["answers"]["team"].get<string>()},
-							{"description", "Team created automatically by createstructure"}};
+			json request2 = {{"name", Repo::data["answers"]["team"].get<string>()},
+							 {"description", "Team created automatically by createstructure"}};
 #ifdef DEBUG
-			cout << "request: " << request.dump(4) << endl;
+			cout << "request: " << request2.dump(4) << endl;
 #endif // DEBUG
 			json teamInfo = Rest::jsonRequest(
 				Rest::GITHUB_REST_API + "orgs/" + Repo::data["answers"]["org"].get<string>() + "/teams",
 				Repo::data["token"].get<string>(),
-				request,
+				request2,
 				true);
 
 #ifdef DEBUG
@@ -177,6 +175,10 @@ void Repo::create()
 
 		request["team_id"] = teamID;
 	}
+
+#ifdef DEBUG
+	cout << "request: " << request.dump(4) << endl;
+#endif // DEBUG
 
 	json response = Rest::jsonRequest(
 		Rest::GITHUB_REST_API +
@@ -227,7 +229,14 @@ void Repo::upload()
 	/**
 	 * Upload the repository
 	 */
-	system(("cd" + Repo::path + "; git add .; git commit -m \"Update\";git push " + GetUploadURL::get(Repo::data)).c_str());
+	cout << GetUploadURL::get(Repo::data) << endl;
+	system((
+		"cd " + 
+		Repo::path + 
+		"; rm -rf .git; git init; git add *; git commit -m \"Update\"; git branch -M main; git push --set-upstream " + 
+		GetUploadURL::get(Repo::data) + 
+		" main"
+		).c_str());
 }
 
 void Repo::remove()
@@ -242,7 +251,7 @@ void Repo::all(json data)
 {
 	/**
 	 * Method for downloading, creating, elaborating and uploading the repository.
-	 * 
+	 *
 	 * @param data The data to be used for the repository.
 	 */
 	Repo(data).all();
@@ -464,4 +473,5 @@ string Repo::replace(string original, vector<pair<string, string>> changes)
 	return original;
 }
 
+#undef DEBUG
 #endif

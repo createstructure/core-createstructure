@@ -54,7 +54,7 @@ string GetUploadURL::get() {
 	 * 
 	 * @return: the template URL
 	 */
-	return "htts://" +
+	return "https://" +
 			GetUploadURL::username +
 			":" +
 			GetUploadURL::token +
@@ -73,4 +73,5 @@ string GetUploadURL::get(json repoInfo) {
 	return GetUploadURL(repoInfo).get();
 }
 
+#undef DEBUG
 #endif

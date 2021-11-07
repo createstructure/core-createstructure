@@ -97,4 +97,6 @@ json InputCheck::sanitize(json data)
 	 */
 	return InputCheck(data).sanitize();
 }
+
+#undef DEBUG
 #endif

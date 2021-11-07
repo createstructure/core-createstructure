@@ -31,17 +31,24 @@ class Workload
 private:
 	json settings;
 	Cryptation cryptation;
+	int attempts;
+	int ID;
+	bool priority;
 
-	json decodeWorkload(int repo_id);
+	json decodeWorkload(int repoID);
 	json getPriority();
 	json getNormal();
 
+	json getNormalRepoInfo();
 public:
 	Workload(json settings);
 
 	json getWorkload();
+	void setDone();
+	void setter(int ID, bool priority);
 
 	static json getWorkload(json settings);
+	static void setDone(json settings, int ID, bool priority);
 };
 
 // Function(s)
@@ -64,19 +71,28 @@ json Workload::getWorkload()
 	 *
 	 * @return: string containing the workload
 	 */
+	// Initialize variables
+	Workload::attempts = 5;
+	Workload::priority = true;
+	Workload::ID = -1;
 
+	// Try to get the priority workload
 	json priority(Workload::getPriority());
 
 	if (!priority.empty())
 		return {{"type", 0},
 				{"workload", priority}};
 
+	Workload::priority = false;
+
+	// Try to get the normal workload
 	json normal(Workload::getNormal());
 
 	if (!normal.empty())
 		return {{"type", 1},
 				{"workload", normal}};
 
+	// Otherwise
 	return {{"type", 2}};
 }
 
@@ -107,6 +123,7 @@ json Workload::getPriority()
 	switch (response["code"].get<int>())
 	{
 	case 200: // New priority
+		Workload::ID = response["priorityID"].get<int>();
 		return response;
 
 	case 201: // No priority
@@ -114,7 +131,10 @@ json Workload::getPriority()
 
 	default:
 		cerr << "Error: " << response["message"].get<string>() << endl;
-		return {};
+		if (Workload::attempts-- > 0)
+			return Workload::getPriority();
+		else
+			return {};
 	}
 }
 
@@ -142,23 +162,18 @@ json Workload::getNormal()
 	cout << response.dump(4) << endl;
 #endif // DEBUG
 	
+	/*
 	// Usefull for debugging
 	response["code"] = 200;
-	response["repo_id"] = 2;
-
-	json tmp;
+	response["repoID"] = 2;
+	*/
 
 	switch (response["code"].get<int>())
 	{
 	case 200: // New job
-		tmp = Workload::decodeWorkload(response["repo_id"].get<int>());
-		if (!tmp["token"].is_string() || !tmp["username"].is_string())
-		{
-			cerr << "Error: invalid data" << endl;
-			return {};
-		}
-		tmp["answers"] = RepoInfoCheck::sanitize(tmp["answers"]);
-		return tmp;
+		Workload::ID = response["repoID"].get<int>();
+		
+		return Workload::getNormalRepoInfo();
 
 	case 204: // No job
 		return {};
@@ -169,7 +184,88 @@ json Workload::getNormal()
 	}
 }
 
-json Workload::decodeWorkload(int repo_id)
+json Workload::getNormalRepoInfo()
+{
+	/**
+	 * Get the normal workload of the process
+	 *
+	 * @return: json containing the normal workload
+	 */
+	try {
+		json tmp = Workload::decodeWorkload(Workload::ID);
+		if (!tmp["token"].is_string() || !tmp["username"].is_string())
+		{
+			cerr << "Error: invalid data" << endl;
+			return {};
+		}
+		tmp["answers"] = RepoInfoCheck::sanitize(tmp["answers"]);
+		return tmp;
+	} catch (...) {
+		cerr << "Error: invalid data" << endl;
+		if (Workload::attempts-- > 0)
+			return Workload::getNormalRepoInfo();
+		else
+			return {};
+	}
+}
+
+void Workload::setDone()
+{
+	/**
+	 * Set the finished status of the process
+	 */
+	if (Workload::ID == -1)
+		return;
+
+	if (Workload::priority)
+	{
+		json request = {
+			{"request", "server_set_priority_done"},
+			{"server_name", Workload::settings["server_name"]},
+			{"server_password", Workload::settings["server_password"]},
+			{"priorityID", Workload::ID}};
+
+		json response = Rest::jsonRequest(
+			Rest::CREATESTRUCTURE_REST_API,
+			"",
+			request,
+			true
+		);
+#ifdef DEBUG
+		cout << response.dump(4) << endl;
+#endif // DEBUG
+	} else {
+		json request = {
+			{"request", "server_set_job_done"},
+			{"server_name", Workload::settings["server_name"]},
+			{"server_password", Workload::settings["server_password"]},
+			{"repoID", Workload::ID}};
+
+		json response = Rest::jsonRequest(
+			Rest::CREATESTRUCTURE_REST_API,
+			"",
+			request,
+			true
+		);
+#ifdef DEBUG
+		cout << response.dump(4) << endl;
+#endif // DEBUG
+	}
+}
+
+void Workload::setter(int ID, bool priority)
+{
+	/**
+	 * Set the ID and priority of the process
+	 *
+	 * @param ID: ID of the process
+	 * @param priority: priority of the process
+	 */
+	Workload::ID = ID;
+	Workload::priority = priority;
+}
+
+json Workload::decodeWorkload(int repoID)
 {
 	/**
 	 * Decode the workload
@@ -183,7 +279,7 @@ json Workload::decodeWorkload(int repo_id)
 		{{"request", "server_get_job_info"},
 		 {"server_name", Workload::settings["server_name"]},
 		 {"server_password", Workload::settings["server_password"]},
-		 {"repo_id", repo_id}},
+		 {"repoID", repoID}},
 		true);
 
 #ifdef DEBUG
@@ -209,10 +305,27 @@ json Workload::getWorkload(json settings)
 	/**
 	 * Get the workload of the process
 	 *
-	 * @param input: json object containing the input data
+	 * @param settings: settings of the process
 	 * @return: string containing the workload
 	 */
 
 	return Workload(settings).getWorkload();
 }
+
+void Workload::setDone(json settings, int ID, bool priority)
+{
+	/**
+	 * Set the finished status of the process
+	 *
+	 * @param settings: settings of the process
+	 * @param ID: ID of the process
+	 * @param priority: true if the process is a priority, false otherwise
+	 */
+
+	Workload workload(settings);
+	workload.setter(ID, priority);
+	workload.setDone();
+}
+
+#undef DEBUG
 #endif

@@ -16,7 +16,7 @@ RUN g++ core.cpp -o core -std=c++17 -lcurl -lcrypto
 
 # Setup git
 RUN apt-get install git -y
-RUN git config --global user.email "contacts@castellanidavide.it"
+RUN git config --global user.email "help@castellanidavide.it"
 RUN git config --global user.name "createstructure"
 RUN git config --global init.defaultBranch "main"
 

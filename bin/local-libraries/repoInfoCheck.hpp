@@ -153,4 +153,6 @@ json RepoInfoCheck::sanitize(json data)
 	 */
 	return RepoInfoCheck(data).sanitize();
 }
+
+#undef DEBUG
 #endif
