@@ -12,16 +12,14 @@
 
 // Dependencies
 #include <bits/stdc++.h>
-#include <sys/reboot.h>
-#include <unistd.h>
 #include "inputCheck.hpp"
+#include "repoInfoCheck.hpp"
 #include "../global-libraries/bin/json.hpp"
 #include "../global-libraries/bin/rest.hpp"
 #include "../global-libraries/bin/cryptation.hpp"
 
 // using ...
 using namespace std;
-using namespace std::this_thread;
 using json = nlohmann::json;
 
 // Definitions
@@ -42,6 +40,8 @@ public:
 	Workload(json settings);
 
 	json getWorkload();
+
+	static json getWorkload(json settings);
 };
 
 // Function(s)
@@ -53,7 +53,7 @@ Workload::Workload(json settings)
 	 * @param input: json object containing the input data
 	 */
 
-	Workload::settings = InputCheck(settings).sanitize();
+	Workload::settings = InputCheck::sanitize(settings);
 	Workload::cryptation = Cryptation(Workload::settings["server_gpg_key"], false);
 }
 
@@ -141,16 +141,24 @@ json Workload::getNormal()
 #ifdef DEBUG
 	cout << response.dump(4) << endl;
 #endif // DEBUG
-	/*
+	
 	// Usefull for debugging
 	response["code"] = 200;
-	response["repo_id"] = 1;
-	*/
+	response["repo_id"] = 2;
+
+	json tmp;
 
 	switch (response["code"].get<int>())
 	{
 	case 200: // New job
-		return Workload::decodeWorkload(response["repo_id"].get<int>());
+		tmp = Workload::decodeWorkload(response["repo_id"].get<int>());
+		if (!tmp["token"].is_string() || !tmp["username"].is_string())
+		{
+			cerr << "Error: invalid data" << endl;
+			return {};
+		}
+		tmp["answers"] = RepoInfoCheck::sanitize(tmp["answers"]);
+		return tmp;
 
 	case 204: // No job
 		return {};
@@ -196,240 +204,15 @@ json Workload::decodeWorkload(int repo_id)
 	return json::parse(decrypted);
 }
 
-/*
-// Declared functions
-json decodeWork();
-bool existsInJson(const json j, const string key);
-json getWork();
-void superWork(string work, json workInfo);
-json getSettings();
-
-// Function(s)
-bool invalidChar(char c)
+json Workload::getWorkload(json settings)
 {
-	/* Invalid char: check if a char is valid or not
+	/**
+	 * Get the workload of the process
 	 *
-	 * input:
-	 *      - c: the char to analyze
-	 *
-	 * output:
-	 *      - true if the given char is invalid
-	 *
-	return !(c >= 32 && c < 128);
+	 * @param input: json object containing the input data
+	 * @return: string containing the workload
+	 */
+
+	return Workload(settings).getWorkload();
 }
-
-void stripUnicode(string &str)
-{
-	/* Strip Unicode: strip a string to the readible chars
-	 *
-	 * input:
-	 *      - the string to adjust
-	 *
-	str.erase(remove_if(str.begin(), str.end(), invalidChar), str.end());
-}
-
-json decodeWork()
-{
-	/* Decode Work: get decoded work instructions
-	 *
-	 * output:
-	 *      - decoded work instructions
-	 *
-
-	// Check if it's time to reboot
-	chrono::duration<double, milli> tm = chrono::high_resolution_clock::now() - start; // milliseconds
-	if (tm.count() > 21600000)
-	{ // 43200000 = 12h in millisecond; 21600000 = 6h in millisecond; 10800000 = 3h in millisecond
-		sleep_for(60s);
-		sync();
-		reboot(RB_AUTOBOOT);
-		exit(0); // Stop the manager to avoid work interruption
-	}
-//	cout << "dec" << endl;
-#ifdef DEBUG
-	cout << textRequest(
-				"https:\u002F\u002Fwww.castellanidavide.it/other/rest/product/give_work.php",
-				"",
-				getSettings(),
-				"POST")
-		 << endl;
-#endif // DEBUG
-
-	try
-	{
-		json message(jsonRequest(
-			"https:\u002F\u002Fwww.castellanidavide.it/other/rest/product/give_work.php",
-			"",
-			getSettings(),
-			"POST"));
-
-#ifdef DEBUG
-		cout << "--->" << message.dump() << endl;
-#endif // DEBUG
-
-		if (!existsInJson(message, "message"))
-			return message;
-
-		string decoded_message;
-		json workInfo;
-
-		switch (messageTypeConvert[message["message"].get<string>()])
-		{
-		case messageType::newWork:
-#ifdef DEBUG
-			cout << "New work" << endl;
-#endif // DEBUG
-			decoded_message = "";
-			for (auto &element : message["data"])
-			{
-				decoded_message += decrypt(element.get<string>());
-				// cout << decoded_message << endl;
-			}
-
-			stripUnicode(decoded_message);
-
-#ifdef DEBUG
-			cout << "Decoded message: " << decoded_message << endl;
-#endif // DEBUG
-
-			try
-			{
-				message["data"] = json::parse(decoded_message);
-			}
-			catch (...)
-			{
-				message["data"] = decoded_message;
-			}
-
-			return message;
-			break;
-
-		case messageType::noWork:
-#ifdef DEBUG
-			cout << "No work" << endl;
-#endif // DEBUG
-			sleep_for(1s);
-			throw "Try again";
-			break;
-
-		case messageType::superWork:
-#ifdef DEBUG
-			cout << "Superwork" << endl;
-#endif // DEBUG
-			workInfo["server_id"] = getSettings()["server_id"].get<string>();
-			workInfo["server_code"] = getSettings()["server_code"].get<string>();
-			workInfo["work_id"] = message["priority_id"].get<string>();
-			superWork(message["priority_message"].get<string>(), workInfo);
-
-			throw "Finished superwork";
-			break;
-
-		default:
-#ifdef DEBUG
-			cout << "Ununderstanded message" << endl;
-#endif // DEBUG
-			cout << "Unknown message: " << message["message"] << endl;
-		}
-	}
-	catch (...)
-	{
-		return decodeWork();
-	}
-
-	cout << "Error taking job work" << endl;
-	return nullptr;
-}
-
-bool existsInJson(const json j, const string key)
-{
-	/* Exist In Json: check if key exist in json
-	 *
-	 * input:
-	 *	- j: the json object
-	 *	- key: the key to search
-	 *
-	 * output:
-	 *      - if disponible, work instructions
-	 *
-	return j.find(key) != j.end();
-}
-
-json getWork()
-{
-	/* Get Work: if disponible get work instructions
-	 *
-	 * output:
-	 *      - if disponible, work instructions
-	 *
-	// Return if new work is assigned
-	json d(decodeWork());
-	if (d.empty())
-	{
-		sleep_for(5s);
-		return getWork();
-	}
-	return d;
-}
-
-void superWork(string work, json workInfo)
-{
-	/* Get Work: if disponible get work instructions
-	 *
-	 * input:
-	 *      - work: the work tag
-	 *      - workInfo: the information(s) to set the work as done
-	 *
-	// Local variabile(s)
-	unordered_map<string, string> works = {
-		{"test", "echo test"},																							// Test print
-		{"update", "apt update; apt full-upgrade -y; docker pull ghcr.io/createstructure/core-createstructure:latest"}, // Update apt packages
-		{"shutdown", "sleep 1m; shutdown"}																				//,		// Wait and shudown the server
-																														//{"reboot", "sleep 1m; reboot"}			// Wait and reboot the server
-	};
-
-	// Mark the instruction as done
-	request(
-		"https:\u002F\u002Fwww.castellanidavide.it/other/rest/product/finished_priority.php",
-		"",
-		workInfo,
-		"POST");
-
-	// Run instruction
-	if (work == "reboot")
-	{
-		sleep_for(60s);
-		sync();
-		reboot(RB_AUTOBOOT);
-	}
-	else
-	{
-		system(works[work].c_str());
-	}
-}
-
-json getSettings()
-{
-	/* Get Settings: return the server settings
-	 *
-	 * output:
-	 *      - the server settings
-	 *
-	if (settings.empty())
-	{
-		ifstream t("server.settings");
-		string tmp((istreambuf_iterator<char>(t)),
-				   istreambuf_iterator<char>());
-		settings = json::parse(tmp);
-#ifdef DEBUG
-		cout << "Loaded settings: " << settings.dump() << endl;
-#endif // DEBUG
-	}
-
-	assert(
-		settings["server_id"].get<string>() != "" &&
-		settings["server_code"].get<string>() != "");
-
-	return settings;
-}
-*/
 #endif

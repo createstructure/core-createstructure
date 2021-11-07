@@ -6,9 +6,9 @@
  * @author: Castellani Davide (@DavideC03)
  */
 
-#ifndef CORE_CREATESTRUCTURE_INPUTCHECK
+#ifndef INPUTCHECK
 // If not imported yet
-#define CORE_CREATESTRUCTURE_INPUTCHECK
+#define INPUTCHECK
 
 // Dependencies
 #include <bits/stdc++.h>
@@ -36,6 +36,7 @@ public:
 
 	bool check();
 	json sanitize();
+	static json sanitize(json data);
 };
 
 // Function(s)
@@ -84,5 +85,16 @@ json InputCheck::sanitize()
 		sanitized[item] = InputCheck::data[item].get<string>();
 
 	return sanitized;
+}
+
+json InputCheck::sanitize(json data)
+{
+	/**
+	 * Sanitize the input passed by the user
+	 *
+	 * @param data: json object with the input data
+	 * @return: json object with the sanitized input data
+	 */
+	return InputCheck(data).sanitize();
 }
 #endif

@@ -2,8 +2,11 @@
 #include <bits/stdc++.h>
 #include "global-libraries/bin/json.hpp"
 #include "global-libraries/bin/rest.hpp"
+#include "global-libraries/bin/sleep.hpp"
 #include "local-libraries/inputCheck.hpp"
 #include "local-libraries/workload.hpp"
+#include "local-libraries/priority.hpp"
+#include "local-libraries/repo.hpp"
 
 //#include "libraries/bin/createstructure.hpp"
 /*#include "libraries/bin/createstructure_emoji.hpp"
@@ -49,16 +52,17 @@ int main(int argc, char *argv[])
 #endif // DEBUG
 
 	// Check the input data
-	inputs = InputCheck(inputs).sanitize();
+	inputs = InputCheck::sanitize(inputs);
 #ifdef DEBUG
 	cout << inputs.dump() << endl;
 #endif // DEBUG
 
 	Workload workload = Workload(inputs);
+	Priority priority = Priority(inputs);
+	Repo *repo = NULL;
 	json workloadData;
 
-	int i = 0;
-	while (i == 0)
+	while (true)
 	{
 		// Take the workload
 		workloadData = workload.getWorkload();
@@ -66,55 +70,38 @@ int main(int argc, char *argv[])
 		// Elaborate the job
 		switch (workloadData["type"].get<int>())
 		{
-			case 0:
-				// Run priority
-				cout << "Priority: " << workloadData.dump(4) << endl;
-				break;
-			case 1:
-				// Create a repo
-				cout << "Create repo: " << workloadData.dump(4) << endl;
-				break;
-			case 2:
-			default:
-				// Do nothing
-				cout << "Do nothing: " << workloadData.dump(4) << endl;
-				break;
+		case 0:
+// Run priority
+#ifdef DEBUG
+			cout << "Running priority: " << workloadData.dump(4) << endl;
+#endif // DEBUG
+			priority.execute(workloadData["priority_instruction"].get<string>(), workloadData["priority_ID"].get<int>());
+			break;
+		case 1:
+// Create a repo
+#ifdef DEBUG
+			cout << "Creating a repo: " << workloadData.dump(4) << endl;
+			repo = (new Repo(workloadData["workload"]));
+			repo->create();
+			repo->remove();
+			repo->download();
+			repo->elaborate();
+			//repo->remove();
+			return 0;
+#endif // DEBUG
+			break;
+		case 2:
+		default:
+// Do nothing
+#ifdef DEBUG
+			cout << "Doing nothing: " << workloadData.dump(4) << endl;
+#endif // DEBUG
+			Sleep::sleep(1);
+			break;
 		}
-
-		i++;
 	}
 
 	/*
-	if (inputCheck(inputs))
-	{
-
-#ifdef DEBUG
-		cout << getEmoji("✓") << "\t"
-			 << "inputs checked" << endl;
-#endif // DEBUG
-
-		path = string("/media/createstructure/") +
-			   inputs["username"].get<string>() +
-			   string("???") +
-			   inputs["answers"]["name"].get<string>();
-
-#ifdef DEBUG
-		cout << getEmoji("✓") << "\t"
-			 << "create path variable" << endl;
-#endif // DEBUG
-
-		download(
-			chooseTemplate(
-				inputs["answers"]["template"].get<string>(),
-				inputs["token"].get<string>(),
-				inputs["username"].get<string>()),
-			path.c_str());
-
-#ifdef DEBUG
-		cout << getEmoji("✓") << "\t"
-			 << "choosed & downloaded template" << endl;
-#endif // DEBUG
-
 		elaborateAll(
 			path,
 			getChanges(
@@ -126,46 +113,9 @@ int main(int argc, char *argv[])
 			 << "getted changes and elaborated all" << endl;
 #endif // DEBUG
 
-		json o;
-		o["name"] = (inputs["answers"]["prefix"].get<string>() == "") ? inputs["answers"]["name"].get<string>() : inputs["answers"]["prefix"].get<string>() + "-" + inputs["answers"]["name"].get<string>();
-		o["description"] = inputs["answers"]["descr"].get<string>();
-		o["private"] = inputs["answers"]["private"].get<bool>();
 
-		if (
-			inputs["answers"]["isOrg"].get<bool>() &&
-			inputs["answers"]["team"].get<string>() != "")
-		{
-			string teamLink = string("https:\u002F\u002Fapi.github.com/orgs/") +
-							  inputs["answers"]["org"].get<string>() +
-							  "/teams";
 
-			json teams = jsonRequest(teamLink, inputs["token"].get<string>(), nullptr, "");
 
-			long long int teamId = -1;
-			for (auto &[key, value] : teams.items())
-			{
-				if (value["name"].get<string>() == inputs["answers"]["team"].get<string>())
-					teamId = value["id"].get<long long int>();
-			}
-
-			if (teamId == -1)
-			{
-				json teamInfo;
-				teamInfo["name"] = inputs["answers"]["team"].get<string>();
-				teamInfo["description"] = "Team made automatically by createstructure.";
-
-				json team = jsonRequest(teamLink, inputs["token"].get<string>(), teamInfo, "POST");
-				teamId = team["id"].get<long long int>();
-			}
-
-			o["team_id"] = teamId;
-		}
-
-		string link = string("https:\u002F\u002Fapi.github.com/") +
-					  (inputs["answers"]["isOrg"].get<bool>() ? (string("orgs/") + inputs["answers"]["org"].get<string>()) : "user") +
-					  string("/repos");
-		string token = inputs["token"].get<string>();
-		request(link, token, o, "POST");
 
 		upload(string("https:\u002F\u002F") +
 				   inputs["username"].get<string>() +
@@ -181,10 +131,9 @@ int main(int argc, char *argv[])
 				   string("???") +
 				   inputs["answers"]["name"].get<string>());
 
-#ifdef DEBUG
-		cout << getEmoji("✓") << "\t"
-			 << "uploaded repo" << endl;
-#endif // DEBUG
+
+
+
 
 		// Set work as finished
 		json finishJson;
