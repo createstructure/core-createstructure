@@ -67,7 +67,7 @@ jobs:
         echo ">" >> Rebuild_the_core_createstructure_locally.md
         echo "> Some features, like subscription with GitHub marketplace, can't be done with the local configuration." >> Rebuild_the_core_createstructure_locally.md
         echo ">" >> Rebuild_the_core_createstructure_locally.md
-        echo "> To do these actions you need to run manually the functions, in the previous example `CreateUpdateRemoveClient`" >> Rebuild_the_core_createstructure_locally.md
+        echo "> To do these actions you need to run manually the functions, in the previous example \`CreateUpdateRemoveClient\`" >> Rebuild_the_core_createstructure_locally.md
         echo "" >> Rebuild_the_core_createstructure_locally.md
         echo "### Steps:" >> Rebuild_the_core_createstructure_locally.md
         echo "- [:octocat: Rebuild the core-createstructure locally :octocat:](#octocat-rebuild-the-core-createstructure-locally-octocat)" >> Rebuild_the_core_createstructure_locally.md
@@ -84,10 +84,10 @@ jobs:
         echo "" >> Rebuild_the_core_createstructure_locally.md
         echo "To install VirtualBox on your PC you need to:" >> Rebuild_the_core_createstructure_locally.md
         echo "- Get in into the UEFI" >> Rebuild_the_core_createstructure_locally.md
-        echo "- Enable the function which name is like "Virtualization" (for each UEFI this step is different but similar)" >> Rebuild_the_core_createstructure_locally.md
+        echo "- Enable the function which name is like \"Virtualization\" (for each UEFI this step is different but similar)" >> Rebuild_the_core_createstructure_locally.md
         echo "- Save the configuration and restart the PC" >> Rebuild_the_core_createstructure_locally.md
         echo "- Go to the [VirtualBox website](https://www.virtualbox.org/)" >> Rebuild_the_core_createstructure_locally.md
-        echo "- Press "Download"" >> Rebuild_the_core_createstructure_locally.md
+        echo "- Press \"Download\"" >> Rebuild_the_core_createstructure_locally.md
         echo "- Run the downloaded file" >> Rebuild_the_core_createstructure_locally.md
         echo "- Follow the installation steps" >> Rebuild_the_core_createstructure_locally.md
         echo "" >> Rebuild_the_core_createstructure_locally.md
@@ -98,24 +98,24 @@ jobs:
         echo "- Download the last LTS version of Ubuntu by the following link: [https://ubuntu.com/download/desktop](https://ubuntu.com/download/desktop)" >> Rebuild_the_core_createstructure_locally.md
         echo "> Now you can continue with the other steps during the download" >> Rebuild_the_core_createstructure_locally.md
         echo "- Open VirtualBox" >> Rebuild_the_core_createstructure_locally.md
-        echo "- Press "New"" >> Rebuild_the_core_createstructure_locally.md
+        echo "- Press \"New\"" >> Rebuild_the_core_createstructure_locally.md
         echo "- Compile the form" >> Rebuild_the_core_createstructure_locally.md
-        echo "    - As name put "rest-createstructure"" >> Rebuild_the_core_createstructure_locally.md
-        echo "    - As Type: "Linux"" >> Rebuild_the_core_createstructure_locally.md
-        echo "    - As version: "Ubuntu (64-bit)" or "Ubuntu (32-bit)"" >> Rebuild_the_core_createstructure_locally.md
-        echo "    - Press "Next >"" >> Rebuild_the_core_createstructure_locally.md
-        echo "- Set the RAM to use for the VirtualMachine, at most half of local RAM and press "Next >"" >> Rebuild_the_core_createstructure_locally.md
-        echo "- Leave "Create a virtual hard disk now" and press "Create"" >> Rebuild_the_core_createstructure_locally.md
-        echo "- Leave "VDI ..." and press "Next >"" >> Rebuild_the_core_createstructure_locally.md
-        echo "- Leave "Dynamically allocated" and press "Next >"" >> Rebuild_the_core_createstructure_locally.md
-        echo "- Change the hard disk memory, we suggest 16GB and press "Create"" >> Rebuild_the_core_createstructure_locally.md
+        echo "    - As name put \"rest-createstructure\"" >> Rebuild_the_core_createstructure_locally.md
+        echo "    - As Type: \"Linux\"" >> Rebuild_the_core_createstructure_locally.md
+        echo "    - As version: \"Ubuntu (64-bit)\" or \"Ubuntu (32-bit)\"" >> Rebuild_the_core_createstructure_locally.md
+        echo "    - Press \"Next >\"" >> Rebuild_the_core_createstructure_locally.md
+        echo "- Set the RAM to use for the VirtualMachine, at most half of local RAM and press \"Next >\"" >> Rebuild_the_core_createstructure_locally.md
+        echo "- Leave \"Create a virtual hard disk now\" and press \"Create\"" >> Rebuild_the_core_createstructure_locally.md
+        echo "- Leave \"VDI ...\" and press \"Next >\"" >> Rebuild_the_core_createstructure_locally.md
+        echo "- Leave \"Dynamically allocated\" and press \"Next >\"" >> Rebuild_the_core_createstructure_locally.md
+        echo "- Change the hard disk memory, we suggest 16GB and press \"Create\"" >> Rebuild_the_core_createstructure_locally.md
         echo "> Make sure that Ubuntu download is finished before to continue" >> Rebuild_the_core_createstructure_locally.md
-        echo "- On the VirtualBox console, selecting the created VM, press "Start"" >> Rebuild_the_core_createstructure_locally.md
+        echo "- On the VirtualBox console, selecting the created VM, press \"Start\"" >> Rebuild_the_core_createstructure_locally.md
         echo "- Select as start-up disk Ubuntu, already downloaded" >> Rebuild_the_core_createstructure_locally.md
         echo "    - Press the folder icon" >> Rebuild_the_core_createstructure_locally.md
-        echo "    - Press "Add", in the top menu" >> Rebuild_the_core_createstructure_locally.md
-        echo "    - Select the Ubuntu iso, the file will have a structure like "ubuntu-version-other_info.iso"" >> Rebuild_the_core_createstructure_locally.md
-        echo "    - Press "Choose" and "Start"" >> Rebuild_the_core_createstructure_locally.md
+        echo "    - Press \"Add\", in the top menu" >> Rebuild_the_core_createstructure_locally.md
+        echo "    - Select the Ubuntu iso, the file will have a structure like \"ubuntu-version-other_info.iso\"" >> Rebuild_the_core_createstructure_locally.md
+        echo "    - Press \"Choose\" and \"Start\"" >> Rebuild_the_core_createstructure_locally.md
         echo "- Follow the install steps (the installation needs some minutes)" >> Rebuild_the_core_createstructure_locally.md
         echo "" >> Rebuild_the_core_createstructure_locally.md
         echo "### 3. Install dependencies" >> Rebuild_the_core_createstructure_locally.md
@@ -123,11 +123,11 @@ jobs:
         echo "> We suggest you to open this guide on the virtual machine, so you can copy and paste easlier the following commands. " >> Rebuild_the_core_createstructure_locally.md
         echo "" >> Rebuild_the_core_createstructure_locally.md
         echo "To install Dependes on the Virtual Machine you need to:" >> Rebuild_the_core_createstructure_locally.md
-        echo "- On the VM (Virtual Machine) open the terminal (`Ctrl + Alt + T`)" >> Rebuild_the_core_createstructure_locally.md
-        echo "- On the terminal paste `sudo apt update; sudo apt install apt-transport-https ca-certificates curl software-properties-common -y; curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -; sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"; sudo apt install docker-ce -y; sudo usermod -aG docker ${USER}; su - ${USER}; git clone --recurse-submodules https://github.com/createstructure/core-createstructure; cd core-createstructure` and insert password" >> Rebuild_the_core_createstructure_locally.md
+        echo "- On the VM (Virtual Machine) open the terminal (\`Ctrl + Alt + T\`)" >> Rebuild_the_core_createstructure_locally.md
+        echo "- On the terminal paste \`sudo apt update; sudo apt install apt-transport-https ca-certificates curl software-properties-common -y; curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -; sudo add-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable\"; sudo apt install docker-ce -y; sudo usermod -aG docker ${USER}; su - ${USER}; git clone --recurse-submodules https://github.com/createstructure/core-createstructure; cd core-createstructure\` and insert password" >> Rebuild_the_core_createstructure_locally.md
         echo "" >> Rebuild_the_core_createstructure_locally.md
         echo "### 4. Build Docker" >> Rebuild_the_core_createstructure_locally.md
-        echo "To build the Docker, into terminal and inside "core-createstructure" folder type `docker build -t core .`" >> Rebuild_the_core_createstructure_locally.md
+        echo "To build the Docker, into terminal and inside \"core-createstructure\" folder type \`docker build -t core .\`" >> Rebuild_the_core_createstructure_locally.md
         echo "" >> Rebuild_the_core_createstructure_locally.md
         echo "### 5. Run Docker" >> Rebuild_the_core_createstructure_locally.md
         echo "To run the builded Docker type : docker run core" >> Rebuild_the_core_createstructure_locally.md
