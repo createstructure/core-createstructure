@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 			Priority::execute(
 				inputs,
 				workloadData["priority_instruction"].get<string>(),
-				workloadData["priority_ID"].get<int>()
+				workloadData["priorityID"].get<int>()
 			);
 			break;
 		case 1:
