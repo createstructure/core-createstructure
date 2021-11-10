@@ -55,6 +55,10 @@ int main(int argc, char *argv[])
 		// Take the workload
 		json workloadData = workload.getWorkload();
 
+#ifdef DEBUG
+		cout << workloadData.dump(4) << endl;
+#endif // DEBUG
+
 		// Elaborate the workload
 		switch (workloadData["type"].get<int>())
 		{
@@ -65,8 +69,8 @@ int main(int argc, char *argv[])
 #endif // DEBUG
 			Priority::execute(
 				inputs,
-				workloadData["priority_instruction"].get<string>(),
-				workloadData["priorityID"].get<int>()
+				workloadData["workload"]["priority_instruction"].get<string>(),
+				workloadData["workload"]["priorityID"].get<int>()
 			);
 			break;
 		case 1:
