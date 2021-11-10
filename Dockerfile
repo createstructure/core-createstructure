@@ -9,7 +9,7 @@ WORKDIR /usr/src/createstructure
 
 # Install requirements
 RUN apt-get update
-RUN apt-get install g++ libssl-dev libcurl4-openssl-dev git -y –no-install-recommends
+RUN apt-get install g++ libssl-dev libcurl4-openssl-dev git -y --no-install-recommends
 
 # Use GCC to compile the source file
 RUN g++ core.cpp -o core -std=c++17 -lcurl -lcrypto
