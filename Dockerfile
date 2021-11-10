@@ -7,15 +7,14 @@ COPY ./bin /usr/src/createstructure
 # Specify the working directory
 WORKDIR /usr/src/createstructure
 
-# Install requirements
+# Install requirements, use GCC to compile the source file and remove the no longer needed packages
 RUN apt-get update
-RUN apt-get install g++ libssl-dev libcurl4-openssl-dev git -y
-
-# Use GCC to compile the source file
-RUN g++ core.cpp -o core -std=c++17 -lcurl -lcrypto
-
-# Remove the useless requirements
-RUN apt-get remove g++ libssl-dev libcurl4-openssl-dev -y; apt autoremove -y
+    # Install the required packages
+RUN apt-get install g++ libssl-dev libcurl4-openssl-dev git -y &&
+    # Compile the source code
+    g++ core.cpp -o core -std=c++17 -lcurl -lcrypto &&
+    # Remove the no longer needed packages
+    apt-get remove g++ libssl-dev libcurl4-openssl-dev -y; apt autoremove -y
 
 # Setup git
 RUN git config --global user.email "help@castellanidavide.it"
