@@ -32,11 +32,18 @@ int main(int argc, char *argv[])
 	json inputs;
 	string path;
 
-	// Assert the correct number of inputs
-	assert(argc == 2); // name_of_program data(json)
-
 	// Save the given input data
-	inputs = json::parse(string(argv[1]));
+	if (argc == 2)
+	{
+		inputs = json::parse(string(argv[1]));
+	}
+	else
+	{
+		std::ifstream t("/etc/auth");
+		std::stringstream buffer;
+		buffer << t.rdbuf();
+		inputs = json::parse(buffer.str());
+	}
 #ifdef DEBUG
 	cout << inputs.dump() << endl;
 #endif // DEBUG
@@ -70,8 +77,7 @@ int main(int argc, char *argv[])
 			Priority::execute(
 				inputs,
 				workloadData["workload"]["priority_instruction"].get<string>(),
-				workloadData["workload"]["priorityID"].get<int>()
-			);
+				workloadData["workload"]["priorityID"].get<int>());
 			break;
 		case 1:
 // Create a repo
@@ -89,13 +95,13 @@ int main(int argc, char *argv[])
 			Sleep::sleep(1);
 			break;
 		}
-		
+
 		// Set the workload as done
 		workload.setDone();
 #ifdef DEBUG
 		cout << "Workload done" << endl;
 		return 0; // Exit the program
-#endif // DEBUG
+#endif			  // DEBUG
 	}
 	return 0;
 }
