@@ -13,7 +13,7 @@ using namespace std;
 using json = nlohmann::json;
 
 // Definitions
-// #define DEBUG
+#define DEBUG
 
 // Declared functions
 int main(int argc, char *argv[]);
@@ -42,6 +42,9 @@ int main(int argc, char *argv[])
 		std::ifstream t("/etc/auth");
 		std::stringstream buffer;
 		buffer << t.rdbuf();
+#ifdef DEBUG
+	cout << buffer.str() << endl;
+#endif // DEBUG
 		inputs = json::parse(buffer.str());
 	}
 #ifdef DEBUG
