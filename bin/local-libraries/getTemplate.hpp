@@ -94,7 +94,7 @@ string GetTemplate::get() {
 				NULL,
 				false
 			);
-			assert(!data["private"].get<bool>());
+			assert(!response["private"].get<bool>());
 			return "https://" + 
 				GetTemplate::username + 
 				":" +
