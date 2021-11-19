@@ -1,5 +1,5 @@
 name: Publish Docker for beta
-on: workflow_dispatch
+on: push
 
 jobs:
   docker:
