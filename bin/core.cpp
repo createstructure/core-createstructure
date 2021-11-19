@@ -17,6 +17,7 @@ using json = nlohmann::json;
 
 // Declared functions
 int main(int argc, char *argv[]);
+string getFile(string path);
 
 // Code
 int main(int argc, char *argv[])
@@ -48,14 +49,15 @@ int main(int argc, char *argv[])
 #ifdef DEBUG
 		system("ls /etc/auth");
 #endif // DEBUG
+		vector<string> credentials = {
+			"server_gpg_key",
+			"server_name",
+			"server_password"};
 
-		std::ifstream t("/etc/auth/auth");
-		std::stringstream buffer;
-		buffer << t.rdbuf();
-#ifdef DEBUG
-		cout << buffer.str() << endl;
-#endif // DEBUG
-		inputs = json::parse(buffer.str());
+		for (auto& credential : credentials)
+		{
+			inputs[credential] = getFile("/etc/auth/" + credential);
+		}
 	}
 #ifdef DEBUG
 	cout << inputs.dump() << endl;
@@ -117,6 +119,20 @@ int main(int argc, char *argv[])
 #endif			  // DEBUG
 	}
 	return 0;
+}
+
+string getFile(string path)
+{
+	/**
+	 * getFile: get the content of a file
+	 *
+	 * @param path: the path of the file
+	 * @return: the content of the file
+	 */
+	std::ifstream t(path);
+	std::stringstream buffer;
+	buffer << t.rdbuf();
+	return buffer.str();
 }
 
 #undef DEBUG
