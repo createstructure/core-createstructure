@@ -32,6 +32,12 @@ int main(int argc, char *argv[])
 	json inputs;
 	string path;
 
+#ifdef DEBUG
+	cout << "argc: " << argc << endl;
+	for (int i = 0; i < argc; i++)
+		cout << "argv[" << i << "]: " << argv[i] << endl;
+#endif // DEBUG
+
 	// Save the given input data
 	if (argc == 2)
 	{
