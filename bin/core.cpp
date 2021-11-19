@@ -45,11 +45,15 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		std::ifstream t("/etc/auth");
+#ifdef DEBUG
+		system("ls /etc/auth");
+#endif // DEBUG
+
+		std::ifstream t("/etc/auth/auth");
 		std::stringstream buffer;
 		buffer << t.rdbuf();
 #ifdef DEBUG
-	cout << buffer.str() << endl;
+		cout << buffer.str() << endl;
 #endif // DEBUG
 		inputs = json::parse(buffer.str());
 	}
