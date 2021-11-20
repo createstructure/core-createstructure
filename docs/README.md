@@ -25,7 +25,7 @@ Repo where there's the source to create the repo(s)
 │   │   │   ├── json.hpp
 │   │   │   ├── rest.hpp
 │   │   │   └── sleep.hpp
-│   │   ├── docs
+│   │   ├── docs # documentation
 │   │   │   ├── CHANGELOG.md
 │   │   │   ├── LICENSE
 │   │   │   ├── README.md
@@ -41,7 +41,7 @@ Repo where there's the source to create the repo(s)
 │       ├── repo.hpp
 │       ├── repoInfoCheck.hpp
 │       └── workload.hpp
-└── docs
+└── docs # documentation
     ├── CHANGELOG.md
     ├── LICENSE
     └── README.md
