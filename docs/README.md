@@ -128,7 +128,7 @@ Repo where there is the docker source to be run by the manager-createstructure
 #### Added
 - Initial version for this repo
 ## :octocat: Rebuild the core-createstructure locally :octocat:
-Install the REST API locally permits you to do some debug and try new configurations.
+Install the core-createstructure locally permits you to do some debug and try new configurations.
 
 > ATTENTION
 >
