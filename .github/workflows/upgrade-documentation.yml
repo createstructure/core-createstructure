@@ -56,7 +56,7 @@ jobs:
         echo "\`\`\`" >> Directory-Structure.md
         tree ../repo >> Directory-Structure.md
         echo "\`\`\`" >> Directory-Structure.md
-        sed -i 's/bin/bin # PHP source code/g' Directory-Structure.md
+        sed -i 's/bin/bin # source code/g' Directory-Structure.md
     - name: Rebuild the core-createstructure locally
       run: |
         cd wiki
