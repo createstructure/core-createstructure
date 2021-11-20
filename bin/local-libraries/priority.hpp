@@ -82,14 +82,14 @@ void Priority::execute(string priorityName, int id)
 			cout << "Priority: " << priorityName << endl;
 #endif // DEBUG
 			Sleep::sleep(60);
-			exit(0);
+			exit(EXIT_SUCCESS);
 			break;
 		case 3: // reboot
 #ifdef DEBUG
 			cout << "Priority: " << priorityName << endl;
 #endif // DEBUG
 			Sleep::sleep(60);
-			exit(1); // Fake an error
+			exit(EXIT_FAILURE); // Fake an error
 			break;
 		default:
 			break;
