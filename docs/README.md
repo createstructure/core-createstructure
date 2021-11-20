@@ -21,6 +21,7 @@ Repo where there's the source to create the repo(s)
 │   │   │   ├── createstructure_setting.hpp
 │   │   │   ├── createstructure_split.hpp
 │   │   │   ├── cryptation.hpp
+│   │   │   ├── inputs.hpp
 │   │   │   ├── json.hpp
 │   │   │   ├── rest.hpp
 │   │   │   └── sleep.hpp
@@ -45,7 +46,7 @@ Repo where there's the source to create the repo(s)
     ├── LICENSE
     └── README.md
 
-7 directories, 32 files
+7 directories, 33 files
 ```
 ## :octocat: Changelog :octocat:
 Repo where there is the docker source to be run by the manager-createstructure
