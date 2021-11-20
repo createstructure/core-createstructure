@@ -61,7 +61,7 @@ jobs:
       run: |
         cd wiki
         echo "## :octocat: Rebuild the core-createstructure locally :octocat:" >> Rebuild_the_core_createstructure_locally.md
-        echo "Install the REST API locally permits you to do some debug and try new configurations." >> Rebuild_the_core_createstructure_locally.md
+        echo "Install the core-createstructure locally permits you to do some debug and try new configurations." >> Rebuild_the_core_createstructure_locally.md
         echo "" >> Rebuild_the_core_createstructure_locally.md
         echo "> ATTENTION" >> Rebuild_the_core_createstructure_locally.md
         echo ">" >> Rebuild_the_core_createstructure_locally.md
