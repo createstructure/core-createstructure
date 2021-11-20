@@ -6,10 +6,10 @@ Repo where there's the source to create the repo(s)
 ```
 ../repo
 ├── Dockerfile
-├── bin # PHP source code
+├── bin # source code
 │   ├── core.cpp
 │   ├── global-libraries
-│   │   ├── bin # PHP source code
+│   │   ├── bin # source code
 │   │   │   ├── createstructure.hpp
 │   │   │   ├── createstructure_debian.hpp
 │   │   │   ├── createstructure_emoji.hpp
