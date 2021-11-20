@@ -75,22 +75,21 @@ void Priority::execute(string priorityName, int id)
 #ifdef DEBUG
 			cout << "Priority: " << priorityName << endl;
 #endif // DEBUG
-			system("apt update; apt full-upgrade -y; docker pull ghcr.io/createstructure/core-createstructure:latest");
+			system("apt update; apt full-upgrade -y");
 			break;
 		case 2: // shutdown
 #ifdef DEBUG
 			cout << "Priority: " << priorityName << endl;
 #endif // DEBUG
 			Sleep::sleep(60);
-			system("shutdown -h now");
+			exit(0);
 			break;
 		case 3: // reboot
 #ifdef DEBUG
 			cout << "Priority: " << priorityName << endl;
 #endif // DEBUG
 			Sleep::sleep(60);
-			sync();
-			reboot(RB_AUTOBOOT);
+			exit(1); // Fake an error
 			break;
 		default:
 			break;
