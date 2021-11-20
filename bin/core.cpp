@@ -89,6 +89,7 @@ int main(int argc, char *argv[])
 #ifdef DEBUG
 			cout << "Running priority: " << workloadData.dump(4) << endl;
 #endif // DEBUG
+			Sleep::sleep(15); // Sleep for 15 seconds
 			// Set the workload as done
 			workload.setDone();
 			Priority::execute(

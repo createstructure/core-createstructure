@@ -15,7 +15,6 @@
 #include <sys/reboot.h>
 #include <unistd.h>
 #include "../global-libraries/bin/json.hpp"
-#include "../global-libraries/bin/sleep.hpp"
 #include "inputCheck.hpp"
 
 // using ...
@@ -81,14 +80,12 @@ void Priority::execute(string priorityName, int id)
 #ifdef DEBUG
 			cout << "Priority: " << priorityName << endl;
 #endif // DEBUG
-			Sleep::sleep(60);
 			exit(EXIT_SUCCESS);
 			break;
 		case 3: // reboot
 #ifdef DEBUG
 			cout << "Priority: " << priorityName << endl;
 #endif // DEBUG
-			Sleep::sleep(60);
 			exit(EXIT_FAILURE); // Fake an error
 			break;
 		default:
