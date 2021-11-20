@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 			"server_name",
 			"server_password"};
 
-		for (auto& credential : credentials)
+		for (auto &credential : credentials)
 		{
 			inputs[credential] = getFile("/etc/auth/" + credential);
 		}
@@ -89,6 +89,8 @@ int main(int argc, char *argv[])
 #ifdef DEBUG
 			cout << "Running priority: " << workloadData.dump(4) << endl;
 #endif // DEBUG
+			// Set the workload as done
+			workload.setDone();
 			Priority::execute(
 				inputs,
 				workloadData["workload"]["priority_instruction"].get<string>(),
@@ -100,6 +102,8 @@ int main(int argc, char *argv[])
 			cout << "Creating a repo: " << workloadData.dump(4) << endl;
 #endif // DEBUG
 			Repo::all(workloadData["workload"]);
+			// Set the workload as done
+			workload.setDone();
 			break;
 		case 2:
 		default:
@@ -111,8 +115,6 @@ int main(int argc, char *argv[])
 			break;
 		}
 
-		// Set the workload as done
-		workload.setDone();
 #ifdef DEBUG
 		cout << "Workload done" << endl;
 		return 0; // Exit the program
