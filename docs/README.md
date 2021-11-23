@@ -10,19 +10,11 @@ Repo where there's the source to create the repo(s)
 │   ├── core.cpp
 │   ├── global-libraries
 │   │   ├── bin # source code
-│   │   │   ├── createstructure.hpp
-│   │   │   ├── createstructure_debian.hpp
-│   │   │   ├── createstructure_emoji.hpp
-│   │   │   ├── createstructure_help.hpp
-│   │   │   ├── createstructure_inputs.hpp
-│   │   │   ├── createstructure_login.hpp
-│   │   │   ├── createstructure_memory.hpp
-│   │   │   ├── createstructure_positive.hpp
-│   │   │   ├── createstructure_setting.hpp
-│   │   │   ├── createstructure_split.hpp
 │   │   │   ├── cryptation.hpp
+│   │   │   ├── emoji.hpp
 │   │   │   ├── inputs.hpp
 │   │   │   ├── json.hpp
+│   │   │   ├── positive.hpp
 │   │   │   ├── rest.hpp
 │   │   │   └── sleep.hpp
 │   │   ├── docs # documentation
@@ -46,7 +38,7 @@ Repo where there's the source to create the repo(s)
     ├── LICENSE
     └── README.md
 
-7 directories, 33 files
+7 directories, 25 files
 ```
 ## :octocat: Changelog :octocat:
 Repo where there is the docker source to be run by the manager-createstructure
