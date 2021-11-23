@@ -22,7 +22,7 @@ jobs:
         import json
         from bs4 import BeautifulSoup
         def get_json():
-          """ Returns the json with REST description
+          """ Returns the json with description
           """
           return json.loads(urllib.request.urlopen("$GITHUB_API_URL/repos/$GITHUB_REPOSITORY").read().decode())
         def get_social_img():
@@ -145,7 +145,7 @@ jobs:
     - name: _Header file
       run: |
         cd wiki
-        echo "# rest-createstructure" > _Header.md
+        echo "# core-createstructure" > _Header.md
         echo "[![GitHub license](https://img.shields.io/badge/license-GNU-green?style=flat)]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/blob/$(echo ${GITHUB_REF#refs/heads/})/docs/LICENSE)" >> _Header.md
         echo "![Author](https://img.shields.io/badge/author-Castellani%20Davide-green?style=flat)" >> _Header.md
         echo "![sys.platform supported](https://img.shields.io/badge/OS%20platform%20supported-all-blue?style=flat) " >> _Header.md
