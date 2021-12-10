@@ -45,6 +45,7 @@ Repo where there's the source to create the repo(s)
 Repo where there is the docker source to be run by the manager-createstructure
 
 - [ Changelog ](#changelog)
+  - [[10.01.01] - 2021-12-10](#100101---2021-12-10)
   - [[09.01.11] - 2021-09-10](#090111---2021-09-10)
     - [Changed](#changed)
   - [[09.01.10] - 2021-07-18](#090110---2021-07-18)
@@ -69,6 +70,15 @@ Repo where there is the docker source to be run by the manager-createstructure
     - [Changed](#changed-7)
   - [[09.01.01] - 2021-06-19](#090101---2021-06-19)
     - [Added](#added-4)
+
+### [10.01.01] - 2021-12-10
+- [v10-beta (manager-createstructure + core-createstructure)](https://github.com/createstructure/manager-createstructure/issues/2)
+  - [Create a Docker management system](https://github.com/createstructure/manager-createstructure/issues/3)
+  - [Create service for the new REST API](https://github.com/createstructure/manager-createstructure/issues/4)
+  - [Create a routine to automate the Docker container management](https://github.com/createstructure/manager-createstructure/issues/5)
+  - [Include install.sh in the manager-createstructure debian package](https://github.com/createstructure/manager-createstructure/issues/1)
+  - [Convert functions into classes in all libraries](https://github.com/createstructure/manager-createstructure/issues/6)
+  - [Improve documentation](https://github.com/createstructure/manager-createstructure/issues/7)
 
 ### [09.01.11] - 2021-09-10
 #### Changed
