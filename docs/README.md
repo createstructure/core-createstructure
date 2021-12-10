@@ -1,11 +1,11 @@
 # core-createstructure
-[![GitHub license](https://img.shields.io/badge/license-GNU-green?style=flat)](https://github.com/createstructure/core-createstructure/blob/v10-beta/docs/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-GNU-green?style=flat)](https://github.com/createstructure/core-createstructure/blob/main/docs/LICENSE)
 ![Author](https://img.shields.io/badge/author-Castellani%20Davide-green?style=flat)
 ![sys.platform supported](https://img.shields.io/badge/OS%20platform%20supported-all-blue?style=flat) 
 
 ##  Description 
 Repo where there's the source to create the repo(s)
-![createstructure/core-createstructure](https://opengraph.githubassets.com/e99289000e1828d3876752cd2ab7c13d1a5a87d45d8e788629ab13b0c6e1616e/createstructure/core-createstructure)
+![createstructure/core-createstructure](https://opengraph.githubassets.com/ccb2035e7fb508d927e7889363b646546193ac7988786f8a1b2cb5ca90dacf1a/createstructure/core-createstructure)
 ##  Directory structure 
 
 ```
