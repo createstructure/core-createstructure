@@ -1,7 +1,12 @@
-## :octocat: Description :octocat:
+# core-createstructure
+[![GitHub license](https://img.shields.io/badge/license-GNU-green?style=flat)](https://github.com/createstructure/core-createstructure/blob/v10-beta/docs/LICENSE)
+![Author](https://img.shields.io/badge/author-Castellani%20Davide-green?style=flat)
+![sys.platform supported](https://img.shields.io/badge/OS%20platform%20supported-all-blue?style=flat) 
+
+##  Description 
 Repo where there's the source to create the repo(s)
 ![createstructure/core-createstructure](https://opengraph.githubassets.com/e99289000e1828d3876752cd2ab7c13d1a5a87d45d8e788629ab13b0c6e1616e/createstructure/core-createstructure)
-## :octocat: Directory structure :octocat:
+##  Directory structure 
 
 ```
 ../repo
@@ -17,14 +22,10 @@ Repo where there's the source to create the repo(s)
 │   │   │   ├── positive.hpp
 │   │   │   ├── rest.hpp
 │   │   │   └── sleep.hpp
-│   │   ├── docs # documentation
-│   │   │   ├── CHANGELOG.md
-│   │   │   ├── LICENSE
-│   │   │   ├── README.md
-│   │   │   └── dependeces.svg
-│   │   └── workflows
-│   │       ├── push.yml
-│   │       └── release.yml
+│   │   └── docs # documentation
+│   │       ├── CHANGELOG.md
+│   │       ├── LICENSE
+│   │       └── README.md
 │   └── local-libraries
 │       ├── getTemplate.hpp
 │       ├── getUploadURL.hpp
@@ -38,12 +39,12 @@ Repo where there's the source to create the repo(s)
     ├── LICENSE
     └── README.md
 
-7 directories, 25 files
+6 directories, 22 files
 ```
-## :octocat: Changelog :octocat:
+##  Changelog 
 Repo where there is the docker source to be run by the manager-createstructure
 
-- [:octocat: Changelog :octocat:](#changelog)
+- [ Changelog ](#changelog)
   - [[09.01.11] - 2021-09-10](#090111---2021-09-10)
     - [Changed](#changed)
   - [[09.01.10] - 2021-07-18](#090110---2021-07-18)
@@ -119,7 +120,7 @@ Repo where there is the docker source to be run by the manager-createstructure
 ### [09.01.01] - 2021-06-19
 #### Added
 - Initial version for this repo
-## :octocat: Rebuild the core-createstructure locally :octocat:
+##  Rebuild the core-createstructure locally 
 Install the core-createstructure locally permits you to do some debug and try new configurations.
 
 > ATTENTION
@@ -129,7 +130,7 @@ Install the core-createstructure locally permits you to do some debug and try ne
 > To do these actions you need to run manually the functions, in the previous example `CreateUpdateRemoveClient`
 
 ### Steps:
-- [:octocat: Rebuild the core-createstructure locally :octocat:](#octocat-rebuild-the-core-createstructure-locally-octocat)
+- [ Rebuild the core-createstructure locally ](#octocat-rebuild-the-core-createstructure-locally-octocat)
   - [Steps:](#steps)
   - [1. Install VirtualBox on the PC](#1-install-virtualbox-on-the-pc)
   - [2. Install Ubuntu](#2-install-ubuntu)
