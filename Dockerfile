@@ -1,6 +1,15 @@
 # Get the ubuntu image from Docker Hub
 FROM ubuntu:latest
 
+# Labels
+LABEL org.opencontainers.image.authors="DavideC03"
+LABEL org.opencontainers.image.title="core createstructure"
+LABEL org.opencontainers.image.url="https://github.com/createstructure/core-createstructure"
+LABEL org.opencontainers.image.description DESCRIPTION
+LABEL org.opencontainers.image.licences="GNU General Public License v3.0"
+LABEL org.opencontainers.image.source="https://github.com/createstructure/core-createstructure"
+LABEL org.opencontainers.image.documentation="https://raw.githubusercontent.com/createstructure/core-createstructure/main/docs/README.md"
+
 # Copy the current folder which contains C++ source code to the Docker image under /usr/src
 COPY ./bin /usr/src/createstructure
 
@@ -9,14 +18,13 @@ WORKDIR /usr/src/createstructure
 
 # Install requirements
 RUN apt-get update
-RUN apt-get install g++ libssl-dev libcurl4-openssl-dev -y
+RUN apt-get install g++ libssl-dev libcurl4-openssl-dev git -y
 
 # Use GCC to compile the source file
 RUN g++ core.cpp -o core -std=c++17 -lcurl -lcrypto
 
 # Setup git
-RUN apt-get install git -y
-RUN git config --global user.email "contacts@castellanidavide.it"
+RUN git config --global user.email "help@castellanidavide.it"
 RUN git config --global user.name "createstructure"
 RUN git config --global init.defaultBranch "main"
 

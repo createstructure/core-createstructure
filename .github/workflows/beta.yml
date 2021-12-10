@@ -1,8 +1,5 @@
-name: Publish Docker
-on:
-  release:
-    types: [published]
-  workflow_dispatch:
+name: Publish Docker for beta
+on: push
 
 jobs:
   docker:
@@ -33,24 +30,13 @@ jobs:
     - name: Prepare Docker
       run: |
         echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-        echo ${{ secrets.DOCKER_TOKEN }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
         docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
         docker buildx create --use
         docker buildx inspect --bootstrap
     - name: Build and push docker for any platform
       run: |
-        PATCH=$(curl -s "https://api.github.com/repos/createstructure/core-createstructure/releases/latest" | jq -r '.tag_name')
-        MINOR=$(echo $PATCH | sed 's/\.[^.]*$//')
-        MAJOR=$(echo $MINOR | sed 's/\.[^.]*$//')
         docker buildx build \
-          -t ghcr.io/createstructure/core-createstructure:$MAJOR \
-          -t ghcr.io/createstructure/core-createstructure:$MINOR \
-          -t ghcr.io/createstructure/core-createstructure:$PATCH \
-          -t ghcr.io/createstructure/core-createstructure:latest \
-          -t createstructure/core-createstructure:$MAJOR \
-          -t createstructure/core-createstructure:$MINOR \
-          -t createstructure/core-createstructure:$PATCH \
-          -t createstructure/core-createstructure:latest \
+          -t ghcr.io/createstructure/core-createstructure:beta \
           --platform=linux/amd64,linux/arm64 \
           --push \
           .

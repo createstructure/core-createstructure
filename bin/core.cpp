@@ -1,167 +1,141 @@
 // Dependencies
 #include <bits/stdc++.h>
-#include "libraries/bin/json.hpp"
-//#include "libraries/bin/createstructure.hpp"
-#include "libraries/bin/createstructure_emoji.hpp"
-#include "libraries/bin/createstructure_inputCheck.hpp"
-#include "libraries/bin/createstructure_download.hpp"
-#include "libraries/bin/createstructure_chooseTemplate.hpp"
-#include "libraries/bin/createstructure_elaborate.hpp"
-#include "libraries/bin/createstructure_changes.hpp"
-#include "libraries/bin/createstructure_upload.hpp"
+#include "global-libraries/bin/json.hpp"
+#include "global-libraries/bin/rest.hpp"
+#include "global-libraries/bin/sleep.hpp"
+#include "local-libraries/inputCheck.hpp"
+#include "local-libraries/workload.hpp"
+#include "local-libraries/priority.hpp"
+#include "local-libraries/repo.hpp"
 
 // using ...
 using namespace std;
 using json = nlohmann::json;
 
 // Definitions
-#define DEBUG
+// #define DEBUG
 
 // Declared functions
 int main(int argc, char *argv[]);
+string getFile(string path);
 
 // Code
 int main(int argc, char *argv[])
 {
-	/* Main: the start point of the code
+	/**
+	 * Main: the start point of the code
 	 *
-	 * inputs:
-	 * 	- argc: the number of command-line arguments
-	 *	- argv: an array containing all command-line arguments
-	 *
-	 * output:
-	 *	- a run code: if it works in the correct way it will return 0
+	 * @param argc: number of arguments passed by command-line
+	 * @param argv: array of arguments passed by command-line
+	 * @return: 0 if the program ends successfully
 	 */
 	// Function viariable(s)
 	json inputs;
 	string path;
 
-	// Assert the correct number of inputs
-	assert(argc == 2); // name_of_program data(json)
+#ifdef DEBUG
+	cout << "argc: " << argc << endl;
+	for (int i = 0; i < argc; i++)
+		cout << "argv[" << i << "]: " << argv[i] << endl;
+#endif // DEBUG
 
-	// Get the given input data
-	inputs = json::parse(string(argv[1]));
+	// Save the given input data
+	if (argc == 2)
+	{
+		inputs = json::parse(string(argv[1]));
+	}
+	else
+	{
+#ifdef DEBUG
+		system("ls /etc/auth");
+#endif // DEBUG
+		vector<string> credentials = {
+			"server_gpg_key",
+			"server_name",
+			"server_password"};
 
+		for (auto &credential : credentials)
+		{
+			inputs[credential] = getFile("/etc/auth/" + credential);
+		}
+	}
 #ifdef DEBUG
 	cout << inputs.dump() << endl;
 #endif // DEBUG
 
-	if (inputCheck(inputs))
+	// Check the input data
+	inputs = InputCheck::sanitize(inputs);
+#ifdef DEBUG
+	cout << inputs.dump() << endl;
+#endif // DEBUG
+
+	// Initialize the workload
+	Workload workload(inputs);
+
+	while (true)
 	{
+		// Take the workload
+		json workloadData = workload.getWorkload();
 
 #ifdef DEBUG
-		cout << getEmoji("✓") << "\t"
-			 << "inputs checked" << endl;
+		cout << workloadData.dump(4) << endl;
 #endif // DEBUG
 
-		path = string("/media/createstructure/") +
-			   inputs["username"].get<string>() +
-			   string("???") +
-			   inputs["answers"]["name"].get<string>();
-
-#ifdef DEBUG
-		cout << getEmoji("✓") << "\t"
-			 << "create path variable" << endl;
-#endif // DEBUG
-
-		download(
-			chooseTemplate(
-				inputs["answers"]["template"].get<string>(),
-				inputs["token"].get<string>(),
-				inputs["username"].get<string>()),
-			path.c_str());
-
-#ifdef DEBUG
-		cout << getEmoji("✓") << "\t"
-			 << "choosed & downloaded template" << endl;
-#endif // DEBUG
-
-		elaborateAll(
-			path,
-			getChanges(
-				inputs,
-				path + "/.createstructure/change.json"));
-
-#ifdef DEBUG
-		cout << getEmoji("✓") << "\t"
-			 << "getted changes and elaborated all" << endl;
-#endif // DEBUG
-
-		json o;
-		o["name"] = (inputs["answers"]["prefix"].get<string>() == "") ? inputs["answers"]["name"].get<string>() : inputs["answers"]["prefix"].get<string>() + "-" + inputs["answers"]["name"].get<string>();
-		o["description"] = inputs["answers"]["descr"].get<string>();
-		o["private"] = inputs["answers"]["private"].get<bool>();
-
-		if (
-			inputs["answers"]["isOrg"].get<bool>() &&
-			inputs["answers"]["team"].get<string>() != "")
+		// Elaborate the workload
+		switch (workloadData["type"].get<int>())
 		{
-			string teamLink = string("https:\u002F\u002Fapi.github.com/orgs/") +
-							  inputs["answers"]["org"].get<string>() +
-							  "/teams";
-
-			json teams = jsonRequest(teamLink, inputs["token"].get<string>(), nullptr, "");
-
-			long long int teamId = -1;
-			for (auto &[key, value] : teams.items())
-			{
-				if (value["name"].get<string>() == inputs["answers"]["team"].get<string>())
-					teamId = value["id"].get<long long int>();
-			}
-
-			if (teamId == -1)
-			{
-				json teamInfo;
-				teamInfo["name"] = inputs["answers"]["team"].get<string>();
-				teamInfo["description"] = "Team made automatically by createstructure.";
-
-				json team = jsonRequest(teamLink, inputs["token"].get<string>(), teamInfo, "POST");
-				teamId = team["id"].get<long long int>();
-			}
-
-			o["team_id"] = teamId;
+		case 0:
+// Run priority
+#ifdef DEBUG
+			cout << "Running priority: " << workloadData.dump(4) << endl;
+#endif // DEBUG
+			Sleep::sleep(15); // Sleep for 15 seconds
+			// Set the workload as done
+			workload.setDone();
+			Priority::execute(
+				inputs,
+				workloadData["workload"]["priority_instruction"].get<string>(),
+				workloadData["workload"]["priorityID"].get<int>());
+			break;
+		case 1:
+// Create a repo
+#ifdef DEBUG
+			cout << "Creating a repo: " << workloadData.dump(4) << endl;
+#endif // DEBUG
+			Repo::all(workloadData["workload"]);
+			// Set the workload as done
+			workload.setDone();
+			break;
+		case 2:
+		default:
+// Do nothing
+#ifdef DEBUG
+			cout << "Doing nothing: " << workloadData.dump(4) << endl;
+#endif // DEBUG
+			Sleep::sleep(1);
+			break;
 		}
 
-		string link = string("https:\u002F\u002Fapi.github.com/") +
-					  (inputs["answers"]["isOrg"].get<bool>() ? (string("orgs/") + inputs["answers"]["org"].get<string>()) : "user") +
-					  string("/repos");
-		string token = inputs["token"].get<string>();
-		request(link, token, o, "POST");
-
-		upload(string("https:\u002F\u002F") +
-				   inputs["username"].get<string>() +
-				   string(":") +
-				   inputs["token"].get<string>() +
-				   string("@github.com/") +
-				   (inputs["answers"]["isOrg"].get<bool>() ? inputs["answers"]["org"].get<string>() : inputs["username"].get<string>()) +
-				   string("/") +
-				   o["name"].get<string>(),
-
-			   string("/media/createstructure/") +
-				   inputs["username"].get<string>() +
-				   string("???") +
-				   inputs["answers"]["name"].get<string>());
-
 #ifdef DEBUG
-		cout << getEmoji("✓") << "\t"
-			 << "uploaded repo" << endl;
-#endif // DEBUG
-
-		// Set work as finished
-		json finishJson;
-		finishJson["server_id"] = inputs["server_id"].get<string>();
-		finishJson["server_code"] = inputs["server_code"].get<string>();
-		finishJson["work_id"] = inputs["work_id"].get<string>();
-
-		string endLink("https:\u002F\u002Fwww.castellanidavide.it/other/rest/product/finished_work.php");
-#ifdef DEBUG
-		cout << getEmoji("✓") << "\t" << textRequest(endLink, "", finishJson, "POST") << endl;
-#endif // DEBUG
+		cout << "Workload done" << endl;
+		return 0; // Exit the program
+#endif			  // DEBUG
 	}
-	else
-	{
-		cout << "Given uncorrect data " << getEmoji("sad") << endl;
-	}
-
 	return 0;
 }
+
+string getFile(string path)
+{
+	/**
+	 * getFile: get the content of a file
+	 *
+	 * @param path: the path of the file
+	 * @return: the content of the file
+	 */
+	std::ifstream t(path);
+	std::stringstream buffer;
+	buffer << t.rdbuf();
+	return buffer.str();
+}
+
+#undef DEBUG
