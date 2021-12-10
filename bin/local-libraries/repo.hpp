@@ -372,7 +372,7 @@ vector<pair<string, string>> Repo::getSpecialChanges()
 	 */
 	return {
 		// Input special changes
-		{"username", Repo::data["username"].get<string>()},
+		{"solusernamesol", Repo::data["username"].get<string>()},
 		{"solnamesol", Repo::data["answers"]["name"].get<string>()},
 		{"soldescrsol", Repo::data["answers"]["descr"].get<string>()},
 		{"solprefixsol", Repo::data["answers"]["prefix"].get<string>()},
