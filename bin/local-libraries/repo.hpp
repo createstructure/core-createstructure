@@ -22,7 +22,7 @@ using namespace std;
 using json = nlohmann::json;
 
 // Definitions
-#define DEBUG
+//#define DEBUG
 
 // Class prototype(s)
 class Repo
@@ -207,20 +207,20 @@ void Repo::elaborate()
 	{
 		if (filesystem::is_regular_file(filesystem::status(file.path())))
 		{
-#ifdef DEBUG
+#ifndef DEBUG
 			cout << "file: " << file.path().string() << endl;
 #endif // DEBUG
 			// Get original
 			ifstream t(file.path().string());
 			string old((istreambuf_iterator<char>(t)), istreambuf_iterator<char>());
-#ifdef DEBUG
+#ifndef DEBUG
 			cout << "old: " << old << endl;
 #endif // DEBUG
 
 			// Put the changed content in the same folder
 			ofstream f(file.path().string());
 			f << replace(old, Repo::changes);
-#ifdef DEBUG
+#ifndef DEBUG
 			cout << "new: " << replace(old, Repo::changes) << endl;
 #endif // DEBUG
 
@@ -228,7 +228,7 @@ void Repo::elaborate()
 			string new_path(replace(file.path(), Repo::changes));
 			if (new_path.compare(file.path()) != 0)
 			{
-#ifdef DEBUG
+#ifndef DEBUG
 				cout << "new_path: " << new_path << endl;
 #endif // DEBUG
 				// Create new directory tree
