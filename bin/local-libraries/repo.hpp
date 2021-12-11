@@ -22,7 +22,7 @@ using namespace std;
 using json = nlohmann::json;
 
 // Definitions
-// #define DEBUG
+#define DEBUG
 
 // Class prototype(s)
 class Repo
@@ -118,6 +118,11 @@ void Repo::download()
 	 */
 	system(("git clone " + GetTemplate::get(Repo::data) + " " + Repo::path).c_str());
 	Repo::changes = Repo::getChanges();
+#ifdef DEBUG
+	cout << "Changes: " << Repo::changes.size() << endl;
+	for (auto &change : Repo::changes)
+		cout << change.first << " -> " << change.second << endl;
+#endif // DEBUG
 }
 
 void Repo::create()
@@ -202,6 +207,9 @@ void Repo::elaborate()
 	{
 		if (filesystem::is_regular_file(filesystem::status(file.path())))
 		{
+#ifdef DEBUG
+			cout << "file: " << file.path().string() << endl;
+#endif // DEBUG
 			// Get original
 			ifstream t(file.path());
 			string old((istreambuf_iterator<char>(t)), istreambuf_iterator<char>());
@@ -231,12 +239,12 @@ void Repo::upload()
 	 */
 	cout << GetUploadURL::get(Repo::data) << endl;
 	system((
-		"cd " + 
-		Repo::path + 
-		"; rm -rf .git; git init; git add *; git commit -m \"Update\"; git branch -M main; git push --set-upstream " + 
-		GetUploadURL::get(Repo::data) + 
-		" main"
-		).c_str());
+			   "cd " +
+			   Repo::path +
+			   "; rm -rf .git; git init; git add *; git commit -m \"Update\"; git branch -M main; git push --set-upstream " +
+			   GetUploadURL::get(Repo::data) +
+			   " main")
+			   .c_str());
 }
 
 void Repo::remove()
