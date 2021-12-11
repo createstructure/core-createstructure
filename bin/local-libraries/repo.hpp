@@ -211,17 +211,26 @@ void Repo::elaborate()
 			cout << "file: " << file.path().string() << endl;
 #endif // DEBUG
 			// Get original
-			ifstream t(file.path());
+			ifstream t(file.path().string());
 			string old((istreambuf_iterator<char>(t)), istreambuf_iterator<char>());
+#ifdef DEBUG
+			cout << "old: " << old << endl;
+#endif // DEBUG
 
 			// Put the changed content in the same folder
-			ofstream f(file.path());
+			ofstream f(file.path().string());
 			f << replace(old, Repo::changes);
+#ifdef DEBUG
+			cout << "new: " << replace(old, Repo::changes) << endl;
+#endif // DEBUG
 
 			// Check if the file name will become different from the original
 			string new_path(replace(file.path(), Repo::changes));
 			if (new_path.compare(file.path()) != 0)
 			{
+#ifdef DEBUG
+				cout << "new_path: " << new_path << endl;
+#endif // DEBUG
 				// Create new directory tree
 				filesystem::create_directories(((filesystem::path)new_path).remove_filename());
 
