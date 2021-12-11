@@ -5,7 +5,7 @@
 
 ##  Description 
 Repo where there's the source to create the repo(s)
-![createstructure/core-createstructure](https://opengraph.githubassets.com/caa046ca9cc4171f30fea03e86556e70a65705b0658f9e00b5aaf1be0ba5405e/createstructure/core-createstructure)
+![createstructure/core-createstructure](https://opengraph.githubassets.com/36a24a882b487e53d4bfd34b84910bb4456372fedb97e3959ef896a923976636/createstructure/core-createstructure)
 ##  Directory structure 
 
 ```
@@ -45,6 +45,7 @@ Repo where there's the source to create the repo(s)
 Repo where there is the docker source to be run by the manager-createstructure
 
 - [ Changelog ](#changelog)
+  - [[10.01.02] - 2021-12-11](#100102---2021-12-11)
   - [[10.01.01] - 2021-12-10](#100101---2021-12-10)
   - [[09.01.11] - 2021-09-10](#090111---2021-09-10)
     - [Changed](#changed)
@@ -70,6 +71,9 @@ Repo where there is the docker source to be run by the manager-createstructure
     - [Changed](#changed-7)
   - [[09.01.01] - 2021-06-19](#090101---2021-06-19)
     - [Added](#added-4)
+
+### [10.01.02] - 2021-12-11
+- [Loop BUG](https://github.com/createstructure/core-createstructure/issues/3)
 
 ### [10.01.01] - 2021-12-10
 - [v10-beta (manager-createstructure + core-createstructure)](https://github.com/createstructure/manager-createstructure/issues/2)
