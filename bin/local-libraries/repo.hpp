@@ -22,7 +22,7 @@ using namespace std;
 using json = nlohmann::json;
 
 // Definitions
-#define DEBUG
+// #define DEBUG
 
 // Class prototype(s)
 class Repo
