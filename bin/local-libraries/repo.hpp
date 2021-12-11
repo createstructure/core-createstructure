@@ -22,7 +22,7 @@ using namespace std;
 using json = nlohmann::json;
 
 // Definitions
-//#define DEBUG
+#define DEBUG
 
 // Class prototype(s)
 class Repo
@@ -37,6 +37,7 @@ private:
 	vector<pair<string, string>> getChanges();
 	vector<pair<string, string>> getSpecialChanges();
 	string replace(string original, vector<pair<string, string>> changes);
+	bool endsWith(string const &value, string const &ending);
 
 public:
 	Repo(json data);
@@ -198,6 +199,20 @@ void Repo::create()
 #endif // DEBUG
 }
 
+bool Repo::endsWith(string const &value, string const &ending)
+{
+	/**
+	 * Check if a string ends with another string
+	 *
+	 * @param value: string to check
+	 * @param ending: string to check against
+	 * @return true if the string ends with the other string
+	 */
+	if (ending.size() > value.size())
+		return false;
+	return std::equal(ending.rbegin(), ending.rend(), value.rbegin());
+}
+
 void Repo::elaborate()
 {
 	/**
@@ -205,33 +220,28 @@ void Repo::elaborate()
 	 */
 	for (const auto &file : filesystem::recursive_directory_iterator(path))
 	{
-		if (filesystem::is_regular_file(filesystem::status(file.path())))
+		if (filesystem::is_regular_file(filesystem::status(file.path())) && !Repo::endsWith(file.path().string(), "/.createstructure/change.json"))
 		{
-#ifndef DEBUG
-			cout << "file: " << file.path().string() << endl;
-#endif // DEBUG
 			// Get original
 			ifstream t(file.path().string());
 			string old((istreambuf_iterator<char>(t)), istreambuf_iterator<char>());
-#ifndef DEBUG
-			cout << "old: " << old << endl;
+
+#ifdef DEBUG
+			cout << "file: " << file.path().string() << "\t" << old.size() << endl;
 #endif // DEBUG
 
 			// Put the changed content in the same folder
 			ofstream f(file.path().string());
-			f << replace(old, Repo::changes);
-#ifndef DEBUG
-			cout << "new: " << replace(old, Repo::changes) << endl;
-#endif // DEBUG
+			f << Repo::replace(old, Repo::changes);
 
 			// Check if the file name will become different from the original
-			string new_path(replace(file.path(), Repo::changes));
+			string new_path(Repo::replace(file.path(), Repo::changes));
 			if (new_path.compare(file.path()) != 0)
 			{
-#ifndef DEBUG
+#ifdef DEBUG
 				cout << "new_path: " << new_path << endl;
 #endif // DEBUG
-				// Create new directory tree
+	   // Create new directory tree
 				filesystem::create_directories(((filesystem::path)new_path).remove_filename());
 
 				// Rename file
@@ -434,55 +444,39 @@ string Repo::replace(string original, vector<pair<string, string>> changes)
 	 * @return string containing the replaced string
 	 */
 	size_t pos = 0;
-	bool others = true;
 
-	while (others)
+	while (true)
 	{
 		// Local variable(s)
 		pair<string, string> change;
-		int bestPos = pos - 1;
+		int bestPos = INT_MAX;
 
 		// For every possible change
 		for (size_t i = 0; i < changes.size(); ++i)
 		{
-			// Local varible(s)
-			int tmpPos = pos - 1;
-			int tmp;
-
-			// Check the first result if there is once
-			do
+			if (original.find(changes[i].first, pos) != string::npos)
 			{
-				tmpPos = ((
-							  tmp = original.find(
-								  changes[i].first,
-								  (tmpPos + 1 < 0) ? 0 : (tmpPos + 1))) == string::npos)
-							 ? -1
-							 : tmp;
-			} while (
-				tmpPos == -1 - 1 &&
-				(tmpPos < 0 + 3 ||
-				 tmpPos > original.size() - 3 ||
-				 original.substr(
-					 tmpPos - 3,
-					 changes[i].first.size() + 6) == "sol" + changes[i].first + "sol"));
-
-			// Check if it's the best one
-			if (tmpPos > -1 && (tmpPos < bestPos || bestPos == pos - 1))
-			{
-				bestPos = tmpPos;
-				change = changes[i];
+				if(original.find(changes[i].first, pos) < bestPos)
+				{
+					bestPos = original.find(changes[i].first, pos);
+					change = changes[i];
+				}
 			}
 		}
 
 		// Check if there is a change to do
-		if (bestPos == pos - 1)
+		if (bestPos == INT_MAX)
 		{
-			others = false;
+			// Give back the changed string
+			return original;
 		}
 		else
 		{
 			original.replace(bestPos, change.first.size(), change.second);
-			pos = bestPos + 1;
+#ifdef DEBUG
+			cout << "Change: " << change.first << " -> " << change.second << endl;
+#endif // DEBUG
+			pos = bestPos + change.second.size();
 		}
 	}
 
