@@ -5,7 +5,7 @@
 
 ##  Description 
 Repo where there's the source to create the repo(s)
-![createstructure/core-createstructure](https://opengraph.githubassets.com/4ef07e7b99f7e8e856cfcfc82af9753d0c41eadb7f3aa02a5c9297bac9c71097/createstructure/core-createstructure)
+![createstructure/core-createstructure](https://opengraph.githubassets.com/037885ad29a3485e6ed1c3e981840f40a0e3cce85d9d2071f41eca5392098284/createstructure/core-createstructure)
 ##  Directory structure 
 
 ```
