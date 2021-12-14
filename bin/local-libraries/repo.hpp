@@ -20,6 +20,10 @@
 // using ...
 using namespace std;
 using json = nlohmann::json;
+using chrono::duration;
+using chrono::duration_cast;
+using chrono::high_resolution_clock;
+using chrono::milliseconds;
 
 // Definitions
 // #define DEBUG
@@ -80,6 +84,13 @@ Repo::Repo(json data)
 	time_t rawtime;
 	time(&rawtime);
 	Repo::date = localtime(&rawtime);
+
+	// Save files on RAM
+	system((
+			   string("") +
+			   "mount -o -t tmpfs none " +
+			   Repo::path)
+			   .c_str());
 }
 
 void Repo::all()
@@ -87,6 +98,11 @@ void Repo::all()
 	/**
 	 * Method for downloading, creating, elaborating and uploading the repository.
 	 */
+
+#ifdef DEBUG
+	auto start = high_resolution_clock::now();
+#endif // DEBUG
+
 #ifdef DEBUG
 	cout << "Repo::all()" << endl;
 #endif // DEBUG
@@ -109,6 +125,12 @@ void Repo::all()
 	Repo::remove();
 #ifdef DEBUG
 	cout << "Removed" << endl;
+#endif // DEBUG
+
+#ifdef DEBUG
+	auto stop = high_resolution_clock::now();
+	duration<double, milli> duration_ms_double = stop - start;
+	cout << "Created in: " << duration_ms_double.count() << "ms";
 #endif // DEBUG
 }
 
@@ -210,7 +232,7 @@ bool Repo::endsWith(string const &value, string const &ending)
 	 */
 	if (ending.size() > value.size())
 		return false;
-	return std::equal(ending.rbegin(), ending.rend(), value.rbegin());
+	return equal(ending.rbegin(), ending.rend(), value.rbegin());
 }
 
 void Repo::elaborate()
@@ -218,9 +240,17 @@ void Repo::elaborate()
 	/**
 	 * Elaborate the repository
 	 */
+
+#ifdef DEBUG
+	auto t1 = high_resolution_clock::now();
+#endif // DEBUG
+
 	for (const auto &file : filesystem::recursive_directory_iterator(path))
 	{
-		if (filesystem::is_regular_file(filesystem::status(file.path())) && !Repo::endsWith(file.path().string(), "/.createstructure/change.json"))
+		if (
+			filesystem::is_regular_file(filesystem::status(file.path())) &&
+			!Repo::endsWith(file.path().string(), "/.createstructure/change.json") &&
+			file.path().string().find("/.git/") == string::npos)
 		{
 			// Get original
 			ifstream t(file.path().string());
@@ -249,6 +279,11 @@ void Repo::elaborate()
 			}
 		}
 	}
+#ifdef DEBUG
+	auto t2 = high_resolution_clock::now();
+	duration<double, milli> ms_double = t2 - t1;
+	cout << ms_double.count() << "ms";
+#endif // DEBUG
 }
 
 void Repo::upload()
@@ -444,6 +479,7 @@ string Repo::replace(string original, vector<pair<string, string>> changes)
 	 * @return string containing the replaced string
 	 */
 	size_t pos = 0;
+	vector<bool> found(changes.size(), true);
 
 	while (true)
 	{
@@ -454,12 +490,19 @@ string Repo::replace(string original, vector<pair<string, string>> changes)
 		// For every possible change
 		for (size_t i = 0; i < changes.size(); ++i)
 		{
-			if (original.find(changes[i].first, pos) != string::npos)
+			if (found[i])
 			{
-				if(original.find(changes[i].first, pos) < bestPos)
+				if (original.find(changes[i].first, pos) != string::npos)
 				{
-					bestPos = original.find(changes[i].first, pos);
-					change = changes[i];
+					if (original.find(changes[i].first, pos) < bestPos)
+					{
+						bestPos = original.find(changes[i].first, pos);
+						change = changes[i];
+					}
+				}
+				else
+				{
+					found[i] = false;
 				}
 			}
 		}
