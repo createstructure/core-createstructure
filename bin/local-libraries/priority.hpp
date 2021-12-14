@@ -60,9 +60,11 @@ void Priority::execute(string priorityName, int id)
 	 * @param id - id of the process
 	 */
 
-	if (find(Priority::priority.begin(), Priority::priority.end(), priorityName) != Priority::priority.end())
+	vector<string>::const_iterator pos = find(Priority::priority.begin(), Priority::priority.end(), priorityName);
+	
+	if (pos != Priority::priority.end())
 	{
-		switch (find(Priority::priority.begin(), Priority::priority.end(), priorityName) - Priority::priority.begin())
+		switch (pos - Priority::priority.begin())
 		{
 		case 0: // test
 #ifdef DEBUG
