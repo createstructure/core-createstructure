@@ -2,6 +2,7 @@
 Repo where there is the docker source to be run by the manager-createstructure
 
 - [Changelog](#changelog)
+  - [[10.01.04] - 2021-12-17](#100104---2021-12-17)
   - [[10.01.03] - 2021-12-14](#100103---2021-12-14)
   - [[10.01.02] - 2021-12-11](#100102---2021-12-11)
   - [[10.01.01] - 2021-12-10](#100101---2021-12-10)
@@ -29,6 +30,9 @@ Repo where there is the docker source to be run by the manager-createstructure
     - [Changed](#changed-7)
   - [[09.01.01] - 2021-06-19](#090101---2021-06-19)
     - [Added](#added-4)
+
+## [10.01.04] - 2021-12-17
+- [.github folder BUG](https://github.com/createstructure/core-createstructure/issues/5)
 
 ## [10.01.03] - 2021-12-14
 - [Save repositories on RAM](https://github.com/createstructure/core-createstructure/issues/4)

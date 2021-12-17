@@ -26,7 +26,7 @@ using chrono::high_resolution_clock;
 using chrono::milliseconds;
 
 // Definitions
-// #define DEBUG
+#define DEBUG
 
 // Class prototype(s)
 class Repo
@@ -295,10 +295,15 @@ void Repo::upload()
 	system((
 			   "cd " +
 			   Repo::path +
-			   "; rm -rf .git; git init; git add *; git commit -m \"Update\"; git branch -M main; git push --set-upstream " +
+			   "; ls -a")
+			   .c_str());
+	system((
+			   "cd " +
+			   Repo::path +
+			   "; rm -rf .git; git init; git add *; git add .github/*; git commit -m \"Update\"; git branch -M main; git push --set-upstream " +
 			   GetUploadURL::get(Repo::data) +
 			   " main")
-			   .c_str());
+			   .c_str());cout << GetUploadURL::get(Repo::data) << endl;
 }
 
 void Repo::remove()
