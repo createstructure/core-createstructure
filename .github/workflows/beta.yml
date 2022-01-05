@@ -1,5 +1,9 @@
 name: Publish Docker for beta
-on: push
+on:
+  workflow_dispatch:
+  push:
+    branches-ignore:
+      - 'releases/*'
 
 jobs:
   docker:
