@@ -2,6 +2,7 @@
 Repo where there is the docker source to be run by the manager-createstructure
 
 - [Changelog](#changelog)
+  - [[10.01.06] - 2022-01-05](#100106---2022-01-05)
   - [[10.01.05] - 2022-01-05](#100105---2022-01-05)
   - [[10.01.04] - 2021-12-17](#100104---2021-12-17)
   - [[10.01.03] - 2021-12-14](#100103---2021-12-14)
@@ -31,6 +32,10 @@ Repo where there is the docker source to be run by the manager-createstructure
     - [Changed](#changed-7)
   - [[09.01.01] - 2021-06-19](#090101---2021-06-19)
     - [Added](#added-4)
+
+## [10.01.06] - 2022-01-05
+- [Error on creation using prefix](https://github.com/createstructure/core-createstructure/issues/6)
+  - Fixed a bug
 
 ## [10.01.05] - 2022-01-05
 - [Error on creation using prefix](https://github.com/createstructure/core-createstructure/issues/6)

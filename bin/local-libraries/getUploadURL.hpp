@@ -65,7 +65,7 @@ string GetUploadURL::get()
 		   "@github.com/" +
 		   (GetUploadURL::data["isOrg"].get<bool>() ? GetUploadURL::data["org"].get<string>() : GetUploadURL::username) +
 		   "/" +
-		   (GetUploadURL::data["answers"]["prefix"].get<string>() == "" ? GetUploadURL::data["answers"]["name"].get<string>() : GetUploadURL::data["answers"]["prefix"].get<string>() + GetUploadURL::data["answers"]["name"].get<string>());
+		   (GetUploadURL::data["prefix"].get<string>() == "" ? GetUploadURL::data["name"].get<string>() : GetUploadURL::data["prefix"].get<string>() + "-" + GetUploadURL::data["name"].get<string>());
 }
 
 string GetUploadURL::get(json repoInfo)

@@ -154,7 +154,7 @@ void Repo::create()
 	 * Create the repository
 	 */
 	json request = {
-		{"name", (Repo::data["answers"]["prefix"].get<string>() == "" ? Repo::data["answers"]["name"].get<string>() : Repo::data["answers"]["prefix"].get<string>() + Repo::data["answers"]["name"].get<string>())},
+		{"name", (Repo::data["answers"]["prefix"].get<string>() == "" ? Repo::data["answers"]["name"].get<string>() : Repo::data["answers"]["prefix"].get<string>() + "-" + Repo::data["answers"]["name"].get<string>())},
 		{"description", Repo::data["answers"]["descr"].get<string>()},
 		{"private", Repo::data["answers"]["private"].get<bool>()}};
 
