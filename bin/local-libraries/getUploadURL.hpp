@@ -1,9 +1,9 @@
 /**
  * getUploadURL.hpp
- * 
+ *
  * Library for getting the upload URL for the repo.
- * 
- * @author Castellani Davide (@DavideC03) 
+ *
+ * @author Castellani Davide (@DavideC03)
  */
 
 #ifndef GET_UPLOAD_URL
@@ -24,22 +24,25 @@ using json = nlohmann::json;
 // #define DEBUG
 
 // Classes prototype(s)
-class GetUploadURL {
-	private:
-		string username;
-		string token;
-		json data;
-	public:
-		GetUploadURL(json repoInfo);
-		string get();
+class GetUploadURL
+{
+private:
+	string username;
+	string token;
+	json data;
 
-		static string get(json repoInfo);
+public:
+	GetUploadURL(json repoInfo);
+	string get();
+
+	static string get(json repoInfo);
 };
 
-GetUploadURL::GetUploadURL(json repoInfo) {
+GetUploadURL::GetUploadURL(json repoInfo)
+{
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param repoInfo: json object containing the repository information
 	 */
 	// Get the data
@@ -48,28 +51,26 @@ GetUploadURL::GetUploadURL(json repoInfo) {
 	GetUploadURL::data = RepoInfoCheck::sanitize(repoInfo["answers"]);
 }
 
-string GetUploadURL::get() {
+string GetUploadURL::get()
+{
 	/**
 	 * Get the template
-	 * 
+	 *
 	 * @return: the template URL
 	 */
 	return "https://" +
-			GetUploadURL::username +
-			":" +
-			GetUploadURL::token +
-			"@github.com/" +
-			(
-				GetUploadURL::data["isOrg"].get<bool>() ?
-					GetUploadURL::data["org"].get<string>():
-					GetUploadURL::username
-			) +
-			"/" +
-			GetUploadURL::data["name"].get<string>();
+		   GetUploadURL::username +
+		   ":" +
+		   GetUploadURL::token +
+		   "@github.com/" +
+		   (GetUploadURL::data["isOrg"].get<bool>() ? GetUploadURL::data["org"].get<string>() : GetUploadURL::username) +
+		   "/" +
+		   (GetUploadURL::data["answers"]["prefix"].get<string>() == "" ? GetUploadURL::data["answers"]["name"].get<string>() : GetUploadURL::data["answers"]["prefix"].get<string>() + GetUploadURL::data["answers"]["name"].get<string>());
 }
 
-string GetUploadURL::get(json repoInfo) {
-	
+string GetUploadURL::get(json repoInfo)
+{
+
 	return GetUploadURL(repoInfo).get();
 }
 
