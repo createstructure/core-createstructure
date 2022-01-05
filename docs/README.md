@@ -5,7 +5,7 @@
 
 ##  Description 
 Repo where there's the source to create the repo(s)
-![createstructure/core-createstructure](https://opengraph.githubassets.com/e816f68e8b591b627ce2e198d52372d0a1e853ff52929223b741333d81667509/createstructure/core-createstructure)
+![createstructure/core-createstructure](https://opengraph.githubassets.com/7540cb255eb569afb18af42c5b713f462a36541cf99fb7a47f4546e6527a134f/createstructure/core-createstructure)
 ##  Directory structure 
 
 ```
@@ -45,6 +45,7 @@ Repo where there's the source to create the repo(s)
 Repo where there is the docker source to be run by the manager-createstructure
 
 - [ Changelog ](#changelog)
+  - [[10.01.06] - 2022-01-05](#100106---2022-01-05)
   - [[10.01.05] - 2022-01-05](#100105---2022-01-05)
   - [[10.01.04] - 2021-12-17](#100104---2021-12-17)
   - [[10.01.03] - 2021-12-14](#100103---2021-12-14)
@@ -74,6 +75,10 @@ Repo where there is the docker source to be run by the manager-createstructure
     - [Changed](#changed-7)
   - [[09.01.01] - 2021-06-19](#090101---2021-06-19)
     - [Added](#added-4)
+
+### [10.01.06] - 2022-01-05
+- [Error on creation using prefix](https://github.com/createstructure/core-createstructure/issues/6)
+  - Fixed a bug
 
 ### [10.01.05] - 2022-01-05
 - [Error on creation using prefix](https://github.com/createstructure/core-createstructure/issues/6)
