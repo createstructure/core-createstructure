@@ -49,6 +49,7 @@ Repo where there's the source to create the repo(s)
 Repo where there is the docker source to be run by the manager-createstructure
 
 - [ Changelog ](#changelog)
+  - [[10.01.08] - 2022-03-12](#100108---2022-03-12)
   - [[10.01.07] - 2022-01-05](#100107---2022-01-05)
   - [[10.01.06] - 2022-01-05](#100106---2022-01-05)
   - [[10.01.05] - 2022-01-05](#100105---2022-01-05)
@@ -81,6 +82,9 @@ Repo where there is the docker source to be run by the manager-createstructure
   - [[09.01.01] - 2021-06-19](#090101---2021-06-19)
     - [Added](#added-4)
 
+### [10.01.08] - 2022-03-12
+- [Added charts automation](https://github.com/createstructure/core-createstructure/issues/7)
+- 
 ### [10.01.07] - 2022-01-05
 - [Add sponsorship button](https://github.com/createstructure/createstructure.github.io/issues/36)
 
