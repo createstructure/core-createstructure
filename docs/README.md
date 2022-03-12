@@ -1,11 +1,15 @@
 # core-createstructure
-[![GitHub license](https://img.shields.io/badge/license-GNU-green?style=flat)](https://github.com/createstructure/core-createstructure/blob/main/docs/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-GNU-green?style=flat)](https://github.com/createstructure/core-createstructure/blob/UML-beta/docs/LICENSE)
 ![Author](https://img.shields.io/badge/author-Castellani%20Davide-green?style=flat)
 ![sys.platform supported](https://img.shields.io/badge/OS%20platform%20supported-all-blue?style=flat) 
 
 ##  Description 
 Repo where there's the source to create the repo(s)
 ![createstructure/core-createstructure](https://opengraph.githubassets.com/b1da841c688ed78dff7986086fe0203f4d84599b71a7f0bfedf24b14eb9296dc/createstructure/core-createstructure)
+
+##  Class UML 
+![Class UML](https://raw.githubusercontent.com/createstructure/core-createstructure/UML-beta/docs/core-createstructure-Class-UML.svg)
+
 ##  Directory structure 
 
 ```
@@ -39,7 +43,9 @@ Repo where there's the source to create the repo(s)
 └── docs # documentation
     ├── CHANGELOG.md
     ├── LICENSE
-    └── README.md
+    ├── README.md
+    ├── core-createstructure-Class-UML.svg
+    └── core-createstructure.drawio
 
 6 directories, 24 files
 ```
@@ -47,6 +53,7 @@ Repo where there's the source to create the repo(s)
 Repo where there is the docker source to be run by the manager-createstructure
 
 - [ Changelog ](#changelog)
+  - [[10.01.08] - 2022-03-12](#100108---2022-03-12)
   - [[10.01.07] - 2022-01-05](#100107---2022-01-05)
   - [[10.01.06] - 2022-01-05](#100106---2022-01-05)
   - [[10.01.05] - 2022-01-05](#100105---2022-01-05)
@@ -79,6 +86,9 @@ Repo where there is the docker source to be run by the manager-createstructure
   - [[09.01.01] - 2021-06-19](#090101---2021-06-19)
     - [Added](#added-4)
 
+### [10.01.08] - 2022-03-12
+- [Added charts automation](https://github.com/createstructure/core-createstructure/issues/7)
+- 
 ### [10.01.07] - 2022-01-05
 - [Add sponsorship button](https://github.com/createstructure/createstructure.github.io/issues/36)
 
