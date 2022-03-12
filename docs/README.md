@@ -7,7 +7,7 @@
 Repo where there's the source to create the repo(s)
 ![createstructure/core-createstructure](https://opengraph.githubassets.com/b1da841c688ed78dff7986086fe0203f4d84599b71a7f0bfedf24b14eb9296dc/createstructure/core-createstructure)
 ##  Class UML 
-![Class UML](https://raw.githubusercontent.com/createstructure/createstructure/core-createstructure/UML-beta/docs/createstructure/core-createstructure-Class-UML.svg)
+![Class UML](https://raw.githubusercontent.com/createstructure/core-createstructure/UML-beta/docs/core-createstructure-Class-UML.svg)
 ##  Directory structure 
 
 ```
