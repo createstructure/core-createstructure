@@ -6,8 +6,10 @@
 ##  Description 
 Repo where there's the source to create the repo(s)
 ![createstructure/core-createstructure](https://opengraph.githubassets.com/b1da841c688ed78dff7986086fe0203f4d84599b71a7f0bfedf24b14eb9296dc/createstructure/core-createstructure)
+
 ##  Class UML 
 ![Class UML](https://raw.githubusercontent.com/createstructure/core-createstructure/UML-beta/docs/core-createstructure-Class-UML.svg)
+
 ##  Directory structure 
 
 ```
@@ -27,7 +29,9 @@ Repo where there's the source to create the repo(s)
 │   │   └── docs # documentation
 │   │       ├── CHANGELOG.md
 │   │       ├── LICENSE
-│   │       └── README.md
+│   │       ├── README.md
+│   │       ├── libraries-createstructure-Class-UML.svg
+│   │       └── libraries-createstructure.drawio
 │   └── local-libraries
 │       ├── getTemplate.hpp
 │       ├── getUploadURL.hpp
