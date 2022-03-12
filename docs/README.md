@@ -1,15 +1,13 @@
 # core-createstructure
-[![GitHub license](https://img.shields.io/badge/license-GNU-green?style=flat)](https://github.com/createstructure/core-createstructure/blob/UML-beta/docs/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-GNU-green?style=flat)](https://github.com/createstructure/core-createstructure/blob/main/docs/LICENSE)
 ![Author](https://img.shields.io/badge/author-Castellani%20Davide-green?style=flat)
 ![sys.platform supported](https://img.shields.io/badge/OS%20platform%20supported-all-blue?style=flat) 
 
 ##  Description 
 Repo where there's the source to create the repo(s)
 ![createstructure/core-createstructure](https://opengraph.githubassets.com/b1da841c688ed78dff7986086fe0203f4d84599b71a7f0bfedf24b14eb9296dc/createstructure/core-createstructure)
-
 ##  Class UML 
-![Class UML](https://raw.githubusercontent.com/createstructure/core-createstructure/UML-beta/docs/core-createstructure-Class-UML.svg)
-
+![Class UML](https://raw.githubusercontent.com/createstructure/core-createstructure/main/docs/core-createstructure-Class-UML.svg)
 ##  Directory structure 
 
 ```
@@ -47,7 +45,7 @@ Repo where there's the source to create the repo(s)
     ├── core-createstructure-Class-UML.svg
     └── core-createstructure.drawio
 
-6 directories, 24 files
+6 directories, 26 files
 ```
 ##  Changelog 
 Repo where there is the docker source to be run by the manager-createstructure
