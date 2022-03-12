@@ -81,7 +81,7 @@ jobs:
       run: |
         cd wiki
         echo "## :octocat: Class UML :octocat:" > Class-UML.md
-        echo "![Class UML](https://raw.githubusercontent.com/createstructure/$GITHUB_REPOSITORY/$(echo ${GITHUB_REF#refs/heads/})/docs/$GITHUB_REPOSITORY-Class-UML.svg)" >> Class-UML.md
+        echo "![Class UML](https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$(echo ${GITHUB_REF#refs/heads/})/docs/${{ github.event.repository.name }}-Class-UML.svg)" >> Class-UML.md
     - name: CHANGELOG file
       run: |
         cp repo/docs/CHANGELOG.md wiki/
