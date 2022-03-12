@@ -5,7 +5,7 @@
 
 ##  Description 
 Repo where there's the source to create the repo(s)
-![createstructure/core-createstructure](https://opengraph.githubassets.com/9b2fad5928b5deecd16dc94ce790de61ed86ce0ae1d52fa66f2e2b6c10d90fd8/createstructure/core-createstructure)
+![createstructure/core-createstructure](https://opengraph.githubassets.com/b1da841c688ed78dff7986086fe0203f4d84599b71a7f0bfedf24b14eb9296dc/createstructure/core-createstructure)
 ##  Directory structure 
 
 ```
@@ -25,7 +25,9 @@ Repo where there's the source to create the repo(s)
 │   │   └── docs # documentation
 │   │       ├── CHANGELOG.md
 │   │       ├── LICENSE
-│   │       └── README.md
+│   │       ├── README.md
+│   │       ├── libraries-createstructure-Class-UML.svg
+│   │       └── libraries-createstructure.drawio
 │   └── local-libraries
 │       ├── getTemplate.hpp
 │       ├── getUploadURL.hpp
@@ -39,7 +41,7 @@ Repo where there's the source to create the repo(s)
     ├── LICENSE
     └── README.md
 
-6 directories, 22 files
+6 directories, 24 files
 ```
 ##  Changelog 
 Repo where there is the docker source to be run by the manager-createstructure
