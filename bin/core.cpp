@@ -14,7 +14,7 @@ using namespace std;
 using json = nlohmann::json;
 
 // Definitions
-#define DEBUG
+// #define DEBUG
 
 // Declared functions
 int main(int argc, char *argv[]);
