@@ -1,5 +1,6 @@
 // Dependencies
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
 #include "global-libraries/bin/json.hpp"
 #include "global-libraries/bin/rest.hpp"
 #include "global-libraries/bin/sleep.hpp"
@@ -13,7 +14,7 @@ using namespace std;
 using json = nlohmann::json;
 
 // Definitions
-// #define DEBUG
+#define DEBUG
 
 // Declared functions
 int main(int argc, char *argv[]);
@@ -32,6 +33,7 @@ int main(int argc, char *argv[])
 	// Function viariable(s)
 	json inputs;
 	string path;
+	bool byArg = false;
 
 #ifdef DEBUG
 	cout << "argc: " << argc << endl;
@@ -40,11 +42,13 @@ int main(int argc, char *argv[])
 #endif // DEBUG
 
 	// Save the given input data
-	if (argc == 2)
+	if (argc == 2 && json::accept(string(argv[1])))
 	{
-		inputs = json::parse(string(argv[1]));
+			inputs = json::parse(string(argv[1]));
+			byArg = true;
 	}
-	else
+	
+	if (!byArg)
 	{
 #ifdef DEBUG
 		system("ls /etc/auth");
