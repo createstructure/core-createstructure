@@ -21,7 +21,18 @@ RUN apt-get update
 RUN apt-get install g++ build-essential libssl-dev libcurl4-openssl-dev git -y
 
 # Use G++ to compile the source file
-RUN make compile
+RUN g++ -Wall ./bin/core.cpp \
+		./bin/local-libraries/getTemplate.cpp \
+		./bin/local-libraries/getUploadURL.cpp \
+		./bin/local-libraries/inputCheck.cpp \
+		./bin/local-libraries/priority.cpp \
+		./bin/local-libraries/repo.cpp \
+		./bin/local-libraries/repoInfoCheck.cpp \
+		./bin/local-libraries/workload.cpp \
+		./bin/global-libraries/bin/cryptation.cpp \
+		./bin/global-libraries/bin/rest.cpp \
+		./bin/global-libraries/bin/sleep.cpp \
+		-o core -std=c++17 -lcurl -lcrypto
 
 # Setup git
 RUN git config --global user.email "help@castellanidavide.it"
