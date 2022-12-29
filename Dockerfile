@@ -21,7 +21,7 @@ RUN apt-get update
 RUN apt-get install g++ build-essential libssl-dev libcurl4-openssl-dev git -y
 
 # Use G++ to compile the source file
-RUN make install
+RUN make compile
 
 # Setup git
 RUN git config --global user.email "help@castellanidavide.it"
