@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
 #ifdef DEBUG
 			cout << "Doing nothing: " << workloadData.dump(4) << endl;
 #endif // DEBUG
-			Sleep::sleep(1);
+			Sleep::sleep(3);
 			break;
 		}
 

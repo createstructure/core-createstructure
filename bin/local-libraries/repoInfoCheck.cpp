@@ -51,11 +51,13 @@ json RepoInfoCheck::sanitize()
 	 */
 	assert(RepoInfoCheck::check());
 
-	json sanitized;
+	sanitized.clear();
 
+	// Insert data into sanitize
 	for (string &item : RepoInfoCheck::required)
 		sanitized[item] = RepoInfoCheck::data[item].get<string>();
 
+	// Insert optional arguments
 	map<string, string> optional1 = {
 		{"descr", "Repository made with the use of createstructure"},
 		{"prefix", ""},
@@ -69,6 +71,7 @@ json RepoInfoCheck::sanitize()
 			sanitized[key] = value;
 	}
 
+	// Insert optional arguments for organization
 	map<string, bool> optional2 = {
 		{"isOrg", false},
 		{"private", false}};
@@ -107,6 +110,13 @@ json RepoInfoCheck::sanitize()
 		);
 		sanitized["team"] = team;
 	}
+
+	// Create repo_path, without spaces
+	string repo_path = sanitized["name"];
+	for (size_t pos = 0; (pos = repo_path.find(" ", pos) + 1); pos++)
+		repo_path.replace(--pos, 1, "-");
+
+	sanitized["repo_path"] = repo_path;
 
 #ifdef DEBUG
 	cout << "RepoInfoCheck::sanitize()" << endl << sanitized.dump(4) << endl;

@@ -10,7 +10,7 @@
 #include "workload.hpp"
 
 // Definitions
-// #define DEBUG
+#define DEBUG
 
 Workload::Workload(json settings)
 {
@@ -121,7 +121,7 @@ json Workload::getNormal()
 #ifdef DEBUG
 	cout << response.dump(4) << endl;
 #endif // DEBUG
-	
+
 	/*
 	// Usefull for debugging
 	response["code"] = 200;
@@ -132,7 +132,7 @@ json Workload::getNormal()
 	{
 	case 200: // New job
 		Workload::ID = response["repoID"].get<int>();
-		
+
 		return Workload::getNormalRepoInfo();
 
 	case 204: // No job
@@ -154,7 +154,8 @@ json Workload::getNormalRepoInfo()
 	 *
 	 * @return: json containing the normal workload
 	 */
-	try {
+	try
+	{
 		json tmp = Workload::decodeWorkload(Workload::ID);
 		if (!tmp["token"].is_string() || !tmp["username"].is_string())
 		{
@@ -163,7 +164,9 @@ json Workload::getNormalRepoInfo()
 		}
 		tmp["answers"] = RepoInfoCheck::sanitize(tmp["answers"]);
 		return tmp;
-	} catch (...) {
+	}
+	catch (...)
+	{
 		cerr << "Error: invalid data" << endl;
 		if (Workload::attempts-- > 0)
 			return Workload::getNormalRepoInfo();
@@ -192,12 +195,13 @@ void Workload::setDone()
 			Rest::CREATESTRUCTURE_REST_API,
 			"",
 			request,
-			true
-		);
+			true);
 #ifdef DEBUG
 		cout << response.dump(4) << endl;
 #endif // DEBUG
-	} else {
+	}
+	else
+	{
 		json request = {
 			{"request", "server_set_job_done"},
 			{"server_name", Workload::settings["server_name"]},
@@ -208,8 +212,7 @@ void Workload::setDone()
 			Rest::CREATESTRUCTURE_REST_API,
 			"",
 			request,
-			true
-		);
+			true);
 #ifdef DEBUG
 		cout << response.dump(4) << endl;
 #endif // DEBUG
@@ -252,12 +255,32 @@ json Workload::decodeWorkload(int repoID)
 
 	// Decrypt the repo info
 	string decrypted = "";
+	if (!json::accept(rest.jsonRequest()["repo_info"].get<string>()))
+	{
+		if (rest.jsonRequest()["repo_info"].is_string())
+		{
+			cerr << "Can't read repo_info as json" << rest.jsonRequest()["repo_info"].get<string>() << endl;
+			exit(502);
+		}
+		else
+		{
+			cerr << "Can't read repo_info" << endl;
+			exit(502);
+		}
+	}
+
 	for (auto &i : json::parse(rest.jsonRequest()["repo_info"].get<string>()))
 	{
 #ifdef DEBUG
 		cout << i.dump(4) << endl;
 #endif // DEBUG
 		decrypted += Workload::cryptation.decrypt(i.get<string>());
+	}
+
+	if (!json::accept(decrypted))
+	{
+		cerr << "Can't read decrypted as json" << decrypted << endl;
+		exit(502);
 	}
 
 	return json::parse(decrypted);

@@ -38,6 +38,7 @@ Repo where there is the docker source to be run by the manager-createstructure
 
 ## [10.01.09] - 2022-12-29
 - [Split .hpp files into modules (.hpp and .cpp)](https://github.com/createstructure/core-createstructure/issues/9)
+- [Can't create repos with spaces](https://github.com/createstructure/core-createstructure/issues/10)
 - Optimized
 - Fixed bugs
 

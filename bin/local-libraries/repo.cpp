@@ -31,7 +31,7 @@ Repo::Repo(json data)
 #endif // DEBUG
 		Repo::data["username"].get<string>() +
 		"+" +
-		Repo::data["answers"]["name"].get<string>();
+		Repo::data["answers"]["repo_path"].get<string>();
 
 	time_t rawtime;
 	time(&rawtime);
@@ -106,7 +106,7 @@ void Repo::create()
 	 * Create the repository
 	 */
 	json request = {
-		{"name", (Repo::data["answers"]["prefix"].get<string>() == "" ? Repo::data["answers"]["name"].get<string>() : Repo::data["answers"]["prefix"].get<string>() + "-" + Repo::data["answers"]["name"].get<string>())},
+		{"name", (Repo::data["answers"]["prefix"].get<string>() == "" ? Repo::data["answers"]["repo_path"].get<string>() : Repo::data["answers"]["prefix"].get<string>() + "-" + Repo::data["answers"]["repo_path"].get<string>())},
 		{"description", Repo::data["answers"]["descr"].get<string>()},
 		{"private", Repo::data["answers"]["private"].get<bool>()}};
 
@@ -361,7 +361,15 @@ vector<pair<string, string>> Repo::getChanges()
 
 	ifstream t(changesFile);
 	string strChanges((istreambuf_iterator<char>(t)), istreambuf_iterator<char>());
-	json jsonChanges = json::parse(strChanges);
+	json jsonChanges;
+	
+	if (!json::accept(strChanges))
+	{
+		cerr << "Can't read strChanges as json" << strChanges << endl;
+		exit(502);
+	}
+	
+	jsonChanges = json::parse(strChanges);
 
 #ifdef DEBUG
 	cout << "jsonChanges: " << jsonChanges.dump(4) << endl;

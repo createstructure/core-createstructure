@@ -31,6 +31,7 @@ class RepoInfoCheck
 private:
 	vector<string> required = {"name"};
 	json data;
+	json sanitized;
 
 public:
 	RepoInfoCheck(json data);
