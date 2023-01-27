@@ -11,7 +11,7 @@ LABEL org.opencontainers.image.source="https://github.com/createstructure/core-c
 LABEL org.opencontainers.image.documentation="https://raw.githubusercontent.com/createstructure/core-createstructure/main/docs/README.md"
 
 # Copy the current folder which contains C++ source code to the Docker image under /usr/src
-COPY ./bin /usr/src/createstructure
+COPY ./ /usr/src/createstructure
 
 # Specify the working directory
 WORKDIR /usr/src/createstructure
@@ -20,8 +20,19 @@ WORKDIR /usr/src/createstructure
 RUN apt-get update
 RUN apt-get install g++ libssl-dev libcurl4-openssl-dev git -y
 
-# Use GCC to compile the source file
-RUN g++ core.cpp -o core -std=c++17 -lcurl -lcrypto
+# Use G++ to compile the source file
+RUN g++ -Wall ./bin/core.cpp \
+		./bin/local-libraries/getTemplate.cpp \
+		./bin/local-libraries/getUploadURL.cpp \
+		./bin/local-libraries/inputCheck.cpp \
+		./bin/local-libraries/priority.cpp \
+		./bin/local-libraries/repo.cpp \
+		./bin/local-libraries/repoInfoCheck.cpp \
+		./bin/local-libraries/workload.cpp \
+		./bin/global-libraries/bin/cryptation.cpp \
+		./bin/global-libraries/bin/rest.cpp \
+		./bin/global-libraries/bin/sleep.cpp \
+		-o core -lcurl -lcrypto
 
 # Setup git
 RUN git config --global user.email "help@castellanidavide.it"

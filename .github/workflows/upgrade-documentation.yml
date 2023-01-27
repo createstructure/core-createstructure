@@ -12,7 +12,8 @@ jobs:
       name: UML
     steps:
     - uses: actions/checkout@v2
-    - name: Export UML    
+    - name: Export UML
+      continue-on-error: true
       uses: docker://rlespinasse/drawio-export:latest
       with:
         args: -f svg -o ./ docs
