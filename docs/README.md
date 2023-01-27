@@ -1,5 +1,5 @@
 # core-createstructure
-[![GitHub license](https://img.shields.io/badge/license-GNU-green?style=flat)](https://github.com/createstructure/core-createstructure/blob/main/docs/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-GNU-green?style=flat)](https://github.com/createstructure/core-createstructure/blob/beta/docs/LICENSE)
 ![Author](https://img.shields.io/badge/author-Castellani%20Davide-green?style=flat)
 ![sys.platform supported](https://img.shields.io/badge/OS%20platform%20supported-all-blue?style=flat) 
 
@@ -7,22 +7,30 @@
 Repo where there's the source to create the repo(s)
 ![createstructure/core-createstructure](https://opengraph.githubassets.com/b1da841c688ed78dff7986086fe0203f4d84599b71a7f0bfedf24b14eb9296dc/createstructure/core-createstructure)
 ##  Class UML 
-![Class UML](https://raw.githubusercontent.com/createstructure/core-createstructure/main/docs/core-createstructure-Class-UML.svg)
+![Class UML](https://raw.githubusercontent.com/createstructure/core-createstructure/beta/docs/core-createstructure-Class-UML.svg)
 ##  Directory structure 
 
 ```
 ../repo
 ├── Dockerfile
+├── Makefile
 ├── bin # source code
 │   ├── core.cpp
 │   ├── global-libraries
+│   │   ├── Makefile
 │   │   ├── bin # source code
+│   │   │   ├── cryptation.cpp
 │   │   │   ├── cryptation.hpp
+│   │   │   ├── emoji.cpp
 │   │   │   ├── emoji.hpp
+│   │   │   ├── inputs.cpp
 │   │   │   ├── inputs.hpp
 │   │   │   ├── json.hpp
+│   │   │   ├── positive.cpp
 │   │   │   ├── positive.hpp
+│   │   │   ├── rest.cpp
 │   │   │   ├── rest.hpp
+│   │   │   ├── sleep.cpp
 │   │   │   └── sleep.hpp
 │   │   └── docs # documentation
 │   │       ├── CHANGELOG.md
@@ -31,12 +39,19 @@ Repo where there's the source to create the repo(s)
 │   │       ├── libraries-createstructure-Class-UML.svg
 │   │       └── libraries-createstructure.drawio
 │   └── local-libraries
+│       ├── getTemplate.cpp
 │       ├── getTemplate.hpp
+│       ├── getUploadURL.cpp
 │       ├── getUploadURL.hpp
+│       ├── inputCheck.cpp
 │       ├── inputCheck.hpp
+│       ├── priority.cpp
 │       ├── priority.hpp
+│       ├── repo.cpp
 │       ├── repo.hpp
+│       ├── repoInfoCheck.cpp
 │       ├── repoInfoCheck.hpp
+│       ├── workload.cpp
 │       └── workload.hpp
 └── docs # documentation
     ├── CHANGELOG.md
@@ -45,48 +60,59 @@ Repo where there's the source to create the repo(s)
     ├── core-createstructure-Class-UML.svg
     └── core-createstructure.drawio
 
-6 directories, 26 files
+6 directories, 41 files
 ```
 ##  Changelog 
 Repo where there is the docker source to be run by the manager-createstructure
 
 - [ Changelog ](#changelog)
-  - [[10.01.08] - 2022-03-12](#100108---2022-03-12)
-  - [[10.01.07] - 2022-01-05](#100107---2022-01-05)
-  - [[10.01.06] - 2022-01-05](#100106---2022-01-05)
-  - [[10.01.05] - 2022-01-05](#100105---2022-01-05)
-  - [[10.01.04] - 2021-12-17](#100104---2021-12-17)
-  - [[10.01.03] - 2021-12-14](#100103---2021-12-14)
-  - [[10.01.02] - 2021-12-11](#100102---2021-12-11)
-  - [[10.01.01] - 2021-12-10](#100101---2021-12-10)
-  - [[09.01.11] - 2021-09-10](#090111---2021-09-10)
+  - [\[10.01.10\] - 2023-01-27](#100110---2023-01-27)
+  - [\[10.01.09\] - 2022-12-29](#100109---2022-12-29)
+  - [\[10.01.08\] - 2022-03-12](#100108---2022-03-12)
+  - [\[10.01.07\] - 2022-01-05](#100107---2022-01-05)
+  - [\[10.01.06\] - 2022-01-05](#100106---2022-01-05)
+  - [\[10.01.05\] - 2022-01-05](#100105---2022-01-05)
+  - [\[10.01.04\] - 2021-12-17](#100104---2021-12-17)
+  - [\[10.01.03\] - 2021-12-14](#100103---2021-12-14)
+  - [\[10.01.02\] - 2021-12-11](#100102---2021-12-11)
+  - [\[10.01.01\] - 2021-12-10](#100101---2021-12-10)
+  - [\[09.01.11\] - 2021-09-10](#090111---2021-09-10)
     - [Changed](#changed)
-  - [[09.01.10] - 2021-07-18](#090110---2021-07-18)
+  - [\[09.01.10\] - 2021-07-18](#090110---2021-07-18)
     - [Changed](#changed-1)
-  - [[09.01.09] - 2021-07-07](#090109---2021-07-07)
+  - [\[09.01.09\] - 2021-07-07](#090109---2021-07-07)
     - [Changed](#changed-2)
-  - [[09.01.08] - 2021-07-04](#090108---2021-07-04)
+  - [\[09.01.08\] - 2021-07-04](#090108---2021-07-04)
     - [Added](#added)
     - [Changed](#changed-3)
-  - [[09.01.07] - 2021-06-25](#090107---2021-06-25)
+  - [\[09.01.07\] - 2021-06-25](#090107---2021-06-25)
     - [Changed](#changed-4)
-  - [[09.01.06] - 2021-06-23](#090106---2021-06-23)
+  - [\[09.01.06\] - 2021-06-23](#090106---2021-06-23)
     - [Changed](#changed-5)
-  - [[09.01.05] - 2021-06-22](#090105---2021-06-22)
+  - [\[09.01.05\] - 2021-06-22](#090105---2021-06-22)
     - [Added](#added-1)
-  - [[09.01.04] - 2021-06-22](#090104---2021-06-22)
+  - [\[09.01.04\] - 2021-06-22](#090104---2021-06-22)
     - [Added](#added-2)
     - [Changed](#changed-6)
-  - [[09.01.03] - 2021-06-19](#090103---2021-06-19)
+  - [\[09.01.03\] - 2021-06-19](#090103---2021-06-19)
     - [Added](#added-3)
-  - [[09.01.02] - 2021-06-19](#090102---2021-06-19)
+  - [\[09.01.02\] - 2021-06-19](#090102---2021-06-19)
     - [Changed](#changed-7)
-  - [[09.01.01] - 2021-06-19](#090101---2021-06-19)
+  - [\[09.01.01\] - 2021-06-19](#090101---2021-06-19)
     - [Added](#added-4)
+
+### [10.01.10] - 2023-01-27
+- [Optimize comments](https://github.com/createstructure/core-createstructure/issues/11)
+
+### [10.01.09] - 2022-12-29
+- [Split .hpp files into modules (.hpp and .cpp)](https://github.com/createstructure/core-createstructure/issues/9)
+- [Can't create repos with spaces](https://github.com/createstructure/core-createstructure/issues/10)
+- Optimized
+- Fixed bugs
 
 ### [10.01.08] - 2022-03-12
 - [Added charts automation](https://github.com/createstructure/core-createstructure/issues/7)
-- 
+
 ### [10.01.07] - 2022-01-05
 - [Add sponsorship button](https://github.com/createstructure/createstructure.github.io/issues/36)
 
