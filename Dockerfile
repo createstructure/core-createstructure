@@ -32,7 +32,7 @@ RUN g++ -Wall ./bin/core.cpp \
 		./bin/global-libraries/bin/cryptation.cpp \
 		./bin/global-libraries/bin/rest.cpp \
 		./bin/global-libraries/bin/sleep.cpp \
-		-o core -std=c++17 -lcurl -lcrypto
+		-o core -lcurl -lcrypto
 
 # Setup git
 RUN git config --global user.email "help@castellanidavide.it"

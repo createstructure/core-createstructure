@@ -1,7 +1,7 @@
 /**
- * repo.cpp
+ * @file repo.cpp
  *
- * Library for managing repositories.
+ * @brief Library for managing repositories.
  *
  * @author Castellani Davide (@DavideC03)
  */
@@ -10,15 +10,15 @@
 #include "repo.hpp"
 
 // Definitions
-//#define DEBUG
+// #define DEBUG
 
+/**
+ * @brief Constructor
+ *
+ * @param data Json data containing the repository information
+ */
 Repo::Repo(json data)
 {
-	/**
-	 * Constructor
-	 *
-	 * @param data: json data containing the repository information
-	 */
 	Repo::data = data;
 #ifdef DEBUG
 	cout << Repo::data.dump(4) << endl;
@@ -45,12 +45,11 @@ Repo::Repo(json data)
 			   .c_str());
 }
 
+/**
+ * @brief Method for downloading, creating, elaborating and uploading the repository.
+ */
 void Repo::all()
 {
-	/**
-	 * Method for downloading, creating, elaborating and uploading the repository.
-	 */
-
 #ifdef DEBUG
 	auto start = high_resolution_clock::now();
 #endif // DEBUG
@@ -86,11 +85,11 @@ void Repo::all()
 #endif // DEBUG
 }
 
+/**
+ * @brief Download the repository
+ */
 void Repo::download()
 {
-	/**
-	 * Download the repository
-	 */
 	system(("git clone " + GetTemplate::get(Repo::data) + " " + Repo::path).c_str());
 	Repo::changes = Repo::getChanges();
 #ifdef DEBUG
@@ -100,11 +99,11 @@ void Repo::download()
 #endif // DEBUG
 }
 
+/**
+ * @brief Create the repository
+ */
 void Repo::create()
 {
-	/**
-	 * Create the repository
-	 */
 	json request = {
 		{"name", (Repo::data["answers"]["prefix"].get<string>() == "" ? Repo::data["answers"]["repo_path"].get<string>() : Repo::data["answers"]["prefix"].get<string>() + "-" + Repo::data["answers"]["repo_path"].get<string>())},
 		{"description", Repo::data["answers"]["descr"].get<string>()},
@@ -173,26 +172,25 @@ void Repo::create()
 #endif // DEBUG
 }
 
+/**
+ * Check if a string ends with another string
+ *
+ * @param value String to check
+ * @param ending String to check against
+ * @return bool True if the string ends with the other string
+ */
 bool Repo::endsWith(string const &value, string const &ending)
 {
-	/**
-	 * Check if a string ends with another string
-	 *
-	 * @param value: string to check
-	 * @param ending: string to check against
-	 * @return true if the string ends with the other string
-	 */
 	if (ending.size() > value.size())
 		return false;
 	return equal(ending.rbegin(), ending.rend(), value.rbegin());
 }
 
+/**
+ * @brief Elaborate the repository
+ */
 void Repo::elaborate()
 {
-	/**
-	 * Elaborate the repository
-	 */
-
 #ifdef DEBUG
 	auto t1 = high_resolution_clock::now();
 #endif // DEBUG
@@ -238,11 +236,11 @@ void Repo::elaborate()
 #endif // DEBUG
 }
 
+/**
+ * @brief Upload the repository
+ */
 void Repo::upload()
 {
-	/**
-	 * Upload the repository
-	 */
 	cout << GetUploadURL::get(Repo::data) << endl;
 	system((
 			   "cd " +
@@ -255,85 +253,86 @@ void Repo::upload()
 			   "; rm -rf .git; git init; git add *; git add .github/*; git commit -m \"Update\"; git branch -M main; git push --set-upstream " +
 			   GetUploadURL::get(Repo::data) +
 			   " main")
-			   .c_str());cout << GetUploadURL::get(Repo::data) << endl;
+			   .c_str());
+	cout << GetUploadURL::get(Repo::data) << endl;
 }
 
+/**
+ * @brief Remove the repository
+ */
 void Repo::remove()
 {
-	/**
-	 * Remove the repository
-	 */
 	system(("rm -rf " + Repo::path).c_str());
 }
 
+/**
+ * @brief Method for downloading, creating, elaborating and uploading the repository.
+ *
+ * @param data The data to be used for the repository.
+ */
 void Repo::all(json data)
 {
-	/**
-	 * Method for downloading, creating, elaborating and uploading the repository.
-	 *
-	 * @param data The data to be used for the repository.
-	 */
 	Repo(data).all();
 }
 
+/**
+ * @brief Download the repository
+ *
+ * @param data Json data containing the repository information
+ */
 void Repo::download(json data)
 {
-	/**
-	 * Download the repository
-	 *
-	 * @param data: json data containing the repository information
-	 */
 	Repo(data).download();
 }
 
+/**
+ * @brief Create the repository
+ *
+ * @param data Json data containing the repository information
+ */
 void Repo::create(json data)
 {
-	/**
-	 * Create the repository
-	 *
-	 * @param data: json data containing the repository information
-	 */
 	Repo(data).create();
 }
 
+/**
+ * @brief Elaborate the repository
+ *
+ * @param data Json data containing the repository information
+ */
 void Repo::elaborate(json data)
 {
-	/**
-	 * Elaborate the repository
-	 *
-	 * @param data: json data containing the repository information
-	 */
 	Repo(data).elaborate();
 }
 
+/**
+ * @brief Upload the repository
+ *
+ * @param data Json data containing the repository information
+ */
 void Repo::upload(json data)
 {
-	/**
-	 * Upload the repository
-	 *
-	 * @param data: json data containing the repository information
-	 */
 	Repo(data).upload();
 }
 
+/**
+ * @brief Remove the repository
+ *
+ * @param data Json data containing the repository information
+ */
 void Repo::remove(json data)
 {
-	/**
-	 * Remove the repository
-	 *
-	 * @param data: json data containing the repository information
-	 */
 	Repo(data).remove();
 }
 
+/**
+ * @brief Get the date in the specified pattern
+ *
+ * @param pattern Date pattern
+ * @return string String containing the date
+ */
 string Repo::getDate(string pattern)
 {
-	/**
-	 * Get the date in the specified pattern
-	 *
-	 * @param pattern: date pattern
-	 * @return string containing the date
-	 */
 	char buffer[255];
 
 	strftime(buffer, sizeof(buffer), pattern.c_str(), Repo::date);
@@ -341,13 +340,13 @@ string Repo::getDate(string pattern)
 	return string(buffer);
 }
 
+/**
+ * @brief Get the changes to do in the repository
+ *
+ * @return vector Vector containing the changes
+ */
 vector<pair<string, string>> Repo::getChanges()
 {
-	/**
-	 * Get the changes to do in the repository
-	 *
-	 * @return vector containing the changes
-	 */
 	vector<pair<string, string>> changes;
 	vector<pair<string, string>> specialChanges(Repo::getSpecialChanges());
 	string changesFile = Repo::path + "/.createstructure/change.json";
@@ -362,13 +361,13 @@ vector<pair<string, string>> Repo::getChanges()
 	ifstream t(changesFile);
 	string strChanges((istreambuf_iterator<char>(t)), istreambuf_iterator<char>());
 	json jsonChanges;
-	
+
 	if (!json::accept(strChanges))
 	{
 		cerr << "Can't read strChanges as json" << strChanges << endl;
 		exit(502);
 	}
-	
+
 	jsonChanges = json::parse(strChanges);
 
 #ifdef DEBUG
@@ -390,13 +389,13 @@ vector<pair<string, string>> Repo::getChanges()
 	return changes;
 }
 
+/**
+ * @brief Get the special changes to do in the repository
+ *
+ * @return vector Vector containing the special changes
+ */
 vector<pair<string, string>> Repo::getSpecialChanges()
 {
-	/**
-	 * Get the special changes to do in the repository
-	 *
-	 * @return vector containing the special changes
-	 */
 	return {
 		// Input special changes
 		{"solusernamesol", Repo::data["username"].get<string>()},
@@ -434,15 +433,15 @@ vector<pair<string, string>> Repo::getSpecialChanges()
 		{"soltimeoffsetsol", Repo::getDate("%z")}};
 }
 
+/**
+ * @brief Replace the special changes in the string
+ *
+ * @param str String to replace
+ * @param changes Vector containing the changes
+ * @return string String containing the replaced string
+ */
 string Repo::replace(string original, vector<pair<string, string>> changes)
 {
-	/**
-	 * Replace the special changes in the string
-	 *
-	 * @param str: string to replace
-	 * @param changes: vector containing the changes
-	 * @return string containing the replaced string
-	 */
 	size_t pos = 0;
 	vector<bool> found(changes.size(), true);
 

@@ -1,7 +1,7 @@
 /**
- * priority.cpp
+ * @file priority.cpp
  *
- * Library for priority queue.
+ * @brief Library for priority queue.
  *
  * @author Castellani Davide (@DavideC03)
  */
@@ -12,27 +12,26 @@
 // Definitions
 // #define DEBUG
 
+/**
+ * @brief Constructor
+ *
+ * @param settings Json object with the settings
+ */
 Priority::Priority(json settings)
 {
-	/**
-	 * Constructor
-	 *
-	 * @param settings - json object with the settings
-	 */
 	this->settings = InputCheck::sanitize(settings);
 }
 
+/**
+ * @brief Execute the priority queue
+ *
+ * @param priorityName Name of the priority queue
+ * @param id Id of the process
+ */
 void Priority::execute(string priorityName, int id)
 {
-	/**
-	 * Execute the priority queue
-	 *
-	 * @param priorityName - name of the priority queue
-	 * @param id - id of the process
-	 */
-
 	vector<string>::const_iterator pos = find(Priority::priority.begin(), Priority::priority.end(), priorityName);
-	
+
 	if (pos != Priority::priority.end())
 	{
 		switch (pos - Priority::priority.begin())
@@ -58,7 +57,7 @@ void Priority::execute(string priorityName, int id)
 		case 3: // reboot
 #ifdef DEBUG
 			cout << "Priority: " << priorityName << endl;
-#endif // DEBUG
+#endif							// DEBUG
 			exit(EXIT_FAILURE); // Fake an error
 			break;
 		default:
@@ -67,15 +66,15 @@ void Priority::execute(string priorityName, int id)
 	}
 }
 
+/**
+ * @brief Execute the priority queue
+ *
+ * @param settings Json object with the settings
+ * @param priorityType Name of the priority queue
+ * @param id Id of the process
+ */
 void Priority::execute(json settings, string priorityType, int id)
 {
-	/**
-	 * Execute the priority queue
-	 *
-	 * @param settings - json object with the settings
-	 * @param priorityType - name of the priority queue
-	 * @param id - id of the process
-	 */
 	Priority(settings).execute(priorityType, id);
 }
 

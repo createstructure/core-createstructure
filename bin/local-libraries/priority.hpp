@@ -1,7 +1,7 @@
 /**
- * priority.hpp
+ * @file priority.hpp
  *
- * Library for priority queue.
+ * @brief Library for priority queue.
  *
  * @author Castellani Davide (@DavideC03)
  */
@@ -27,7 +27,7 @@ using json = nlohmann::json;
 // Definitions
 // #define DEBUG
 
-// Class prototype(s)
+// Class prototype
 class Priority
 {
 private:

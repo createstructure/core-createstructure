@@ -1,7 +1,7 @@
 /**
- * inputCheck.hpp
+ * @file inputCheck.hpp
  *
- * This library is used to check the user input(s).
+ * @brief This library is used to check the user input(s).
  *
  * @author: Castellani Davide (@DavideC03)
  */
@@ -18,7 +18,7 @@
 using namespace std;
 using json = nlohmann::json;
 
-// Classes prototype(s)
+// Class prototype
 class InputCheck
 {
 	/**

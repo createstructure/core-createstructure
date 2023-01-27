@@ -1,7 +1,7 @@
 /**
- * getUploadURL.hpp
+ * @file getUploadURL.hpp
  *
- * Library for getting the upload URL for the repo.
+ * @brief Library for getting the upload URL for the repo.
  *
  * @author Castellani Davide (@DavideC03)
  */
@@ -21,7 +21,7 @@
 using namespace std;
 using json = nlohmann::json;
 
-// Classes prototype(s)
+// Class prototype
 class GetUploadURL
 {
 private:

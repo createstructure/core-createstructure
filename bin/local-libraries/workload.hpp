@@ -1,7 +1,7 @@
 /**
- * workload.hpp
+ * @file workload.hpp
  *
- * Library to get the workload of a process.
+ * @brief Library to get the workload of a process.
  *
  * @author Castellani Davide (@DavideC03)
  */

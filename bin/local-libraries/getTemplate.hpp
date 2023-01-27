@@ -1,7 +1,7 @@
 /**
- * gettemplateURL.hpp
+ * @file gettemplateURL.hpp
  * 
- * Library for getting template URL.
+ * @brief Library for getting template URL.
  * 
  * @author Castellani Davide (@DavideC03)
  */
@@ -21,7 +21,7 @@
 using namespace std;
 using json = nlohmann::json;
 
-// Classes prototype(s)
+// Class prototype
 class GetTemplate {
 	private:
 		string username;

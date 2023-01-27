@@ -1,7 +1,7 @@
 /**
- * repoInfoCheck.hpp
+ * @file repoInfoCheck.hpp
  *
- * This library is used to check the user input(s).
+ * @brief This library is used to check the user input(s).
  *
  * @author: Castellani Davide (@DavideC03)
  */
@@ -22,7 +22,7 @@ using json = nlohmann::json;
 // Definitions
 // #define DEBUG
 
-// Classes prototype(s)
+// Class prototype
 class RepoInfoCheck
 {
 	/**

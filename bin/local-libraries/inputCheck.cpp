@@ -1,7 +1,7 @@
 /**
- * inputCheck.cpp
+ * @file inputCheck.cpp
  *
- * This library is used to check the user input(s).
+ * @brief This library is used to check the user input(s).
  *
  * @author: Castellani Davide (@DavideC03)
  */
@@ -12,23 +12,23 @@
 // Definitions
 // #define DEBUG
 
+/**
+ * @brief Constructor
+ *
+ * @param data Json object with the input data
+ */
 InputCheck::InputCheck(json data)
 {
-	/**
-	 * Constructor
-	 *
-	 * @param data: json object with the input data
-	 */
 	InputCheck::data = data;
 }
 
+/**
+ * @brief Check the input passed by the user
+ *
+ * @return bool True if the input is valid, False otherwise
+ */
 bool InputCheck::check()
 {
-	/**
-	 * Check the input passed by the user
-	 *
-	 * @return: true if the input is valid, false otherwise
-	 */
 	try
 	{
 		for (string &item : InputCheck::required)
@@ -42,13 +42,13 @@ bool InputCheck::check()
 	return true;
 }
 
+/**
+ * @brief Sanitize the input passed by the user
+ *
+ * @return json Object with the sanitized input data
+ */
 json InputCheck::sanitize()
 {
-	/**
-	 * Sanitize the input passed by the user
-	 *
-	 * @return: json object with the sanitized input data
-	 */
 	assert(InputCheck::check());
 
 	json sanitized;
@@ -59,14 +59,14 @@ json InputCheck::sanitize()
 	return sanitized;
 }
 
+/**
+ * @brief Sanitize the input passed by the user
+ *
+ * @param data Json object with the input data
+ * @return json Object with the sanitized input data
+ */
 json InputCheck::sanitize(json data)
 {
-	/**
-	 * Sanitize the input passed by the user
-	 *
-	 * @param data: json object with the input data
-	 * @return: json object with the sanitized input data
-	 */
 	return InputCheck(data).sanitize();
 }
 

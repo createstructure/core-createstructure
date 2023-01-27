@@ -1,7 +1,7 @@
 /**
- * getUploadURL.cpp
+ * @file getUploadURL.cpp
  *
- * Library for getting the upload URL for the repo.
+ * @brief Library for getting the upload URL for the repo.
  *
  * @author Castellani Davide (@DavideC03)
  */
@@ -12,26 +12,25 @@
 // Definitions
 // #define DEBUG
 
+/**
+ * @brief Constructor
+ *
+ * @param repoInfo Json object containing the repository information
+ */
 GetUploadURL::GetUploadURL(json repoInfo)
 {
-	/**
-	 * Constructor
-	 *
-	 * @param repoInfo: json object containing the repository information
-	 */
-	// Get the data
 	GetUploadURL::username = repoInfo["username"].get<string>();
 	GetUploadURL::token = repoInfo["token"].get<string>();
 	GetUploadURL::data = RepoInfoCheck::sanitize(repoInfo["answers"]);
 }
 
+/**
+ * @brief Get the template
+ *
+ * @return string The template URL
+ */
 string GetUploadURL::get()
 {
-	/**
-	 * Get the template
-	 *
-	 * @return: the template URL
-	 */
 	return "https://" +
 		   GetUploadURL::username +
 		   ":" +
@@ -42,9 +41,14 @@ string GetUploadURL::get()
 		   (GetUploadURL::data["prefix"].get<string>() == "" ? GetUploadURL::data["repo_path"].get<string>() : GetUploadURL::data["prefix"].get<string>() + "-" + GetUploadURL::data["repo_path"].get<string>());
 }
 
+/**
+ * @brief Get, without constructor
+ *
+ * @param repoInfo Json object containing the repository information
+ * @return string The template URL
+ */
 string GetUploadURL::get(json repoInfo)
 {
-
 	return GetUploadURL(repoInfo).get();
 }
 

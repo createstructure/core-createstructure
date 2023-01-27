@@ -1,7 +1,7 @@
 /**
- * workload.cpp
+ * @file workload.cpp
  *
- * Library to get the workload of a process.
+ * @brief Library to get the workload of a process.
  *
  * @author Castellani Davide (@DavideC03)
  */
@@ -12,25 +12,24 @@
 // Definitions
 #define DEBUG
 
+/**
+ * Constructor
+ *
+ * @param input: json object containing the input data
+ */
 Workload::Workload(json settings)
 {
-	/**
-	 * Constructor
-	 *
-	 * @param input: json object containing the input data
-	 */
-
 	Workload::settings = InputCheck::sanitize(settings);
 	Workload::cryptation = Cryptation(Workload::settings["server_gpg_key"], false);
 }
 
+/**
+ * Get the workload of the process
+ *
+ * @return: string containing the workload
+ */
 json Workload::getWorkload()
 {
-	/**
-	 * Get the workload of the process
-	 *
-	 * @return: string containing the workload
-	 */
 	// Initialize variables
 	Workload::attempts = 5;
 	Workload::priority = true;
@@ -56,14 +55,13 @@ json Workload::getWorkload()
 	return {{"type", 2}};
 }
 
+/**
+ * Get the priority of the process
+ *
+ * @return: json containing the priority
+ */
 json Workload::getPriority()
 {
-	/**
-	 * Get the priority of the process
-	 *
-	 * @return: json containing the priority
-	 */
-
 	json request = {
 		{"request", "server_get_priority"},
 		{"server_name", Workload::settings["server_name"]},
@@ -98,14 +96,13 @@ json Workload::getPriority()
 	}
 }
 
+/**
+ * Get the normal workload of the process
+ *
+ * @return: json containing the normal workload
+ */
 json Workload::getNormal()
 {
-	/**
-	 * Get the normal workload of the process
-	 *
-	 * @return: json containing the normal workload
-	 */
-
 	json request = {
 		{"request", "server_reserve_job"},
 		{"server_name", Workload::settings["server_name"]},
@@ -147,13 +144,13 @@ json Workload::getNormal()
 	}
 }
 
+/**
+ * @brief Get the normal workload of the process
+ *
+ * @return json Json containing the normal workload
+ */
 json Workload::getNormalRepoInfo()
 {
-	/**
-	 * Get the normal workload of the process
-	 *
-	 * @return: json containing the normal workload
-	 */
 	try
 	{
 		json tmp = Workload::decodeWorkload(Workload::ID);
@@ -175,11 +172,11 @@ json Workload::getNormalRepoInfo()
 	}
 }
 
+/**
+ * @brief Set the finished status of the process
+ */
 void Workload::setDone()
 {
-	/**
-	 * Set the finished status of the process
-	 */
 	if (Workload::ID == -1)
 		return;
 
@@ -219,25 +216,25 @@ void Workload::setDone()
 	}
 }
 
+/**
+ * @brief Set the ID and priority of the process
+ *
+ * @param ID ID of the process
+ * @param priority Priority of the process
+ */
 void Workload::setter(int ID, bool priority)
 {
-	/**
-	 * Set the ID and priority of the process
-	 *
-	 * @param ID: ID of the process
-	 * @param priority: priority of the process
-	 */
 	Workload::ID = ID;
 	Workload::priority = priority;
 }
 
+/**
+ * @brief Decode the workload
+ *
+ * @return json Object containing the workload
+ */
 json Workload::decodeWorkload(int repoID)
 {
-	/**
-	 * Decode the workload
-	 *
-	 * @return: json object containing the workload
-	 */
 	// Get the repo info
 	Rest rest = Rest(
 		Rest::CREATESTRUCTURE_REST_API,
@@ -286,28 +283,26 @@ json Workload::decodeWorkload(int repoID)
 	return json::parse(decrypted);
 }
 
+/**
+ * @brief Get the workload of the process
+ *
+ * @param settings Settings of the process
+ * @return string String containing the workload
+ */
 json Workload::getWorkload(json settings)
 {
-	/**
-	 * Get the workload of the process
-	 *
-	 * @param settings: settings of the process
-	 * @return: string containing the workload
-	 */
-
 	return Workload(settings).getWorkload();
 }
 
+/**
+ * @brief Set the finished status of the process
+ *
+ * @param settings Settings of the process
+ * @param ID ID of the process
+ * @param priority True if the process is a priority, False otherwise
+ */
 void Workload::setDone(json settings, int ID, bool priority)
 {
-	/**
-	 * Set the finished status of the process
-	 *
-	 * @param settings: settings of the process
-	 * @param ID: ID of the process
-	 * @param priority: true if the process is a priority, false otherwise
-	 */
-
 	Workload workload(settings);
 	workload.setter(ID, priority);
 	workload.setDone();

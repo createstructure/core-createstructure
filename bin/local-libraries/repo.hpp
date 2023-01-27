@@ -1,7 +1,7 @@
 /**
- * repo.hpp
+ * @file repo.hpp
  *
- * Library for managing repositories.
+ * @brief Library for managing repositories.
  *
  * @author Castellani Davide (@DavideC03)
  */
@@ -29,7 +29,7 @@ using chrono::duration_cast;
 using chrono::high_resolution_clock;
 using chrono::milliseconds;
 
-// Class prototype(s)
+// Class prototype
 class Repo
 {
 private:

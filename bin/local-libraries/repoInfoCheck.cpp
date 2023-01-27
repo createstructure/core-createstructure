@@ -1,7 +1,7 @@
 /**
- * repoInfoCheck.cpp
+ * @file repoInfoCheck.cpp
  *
- * This library is used to check the user input(s).
+ * @brief This library is used to check the user input(s).
  *
  * @author: Castellani Davide (@DavideC03)
  */
@@ -12,23 +12,23 @@
 // Definitions
 // #define DEBUG
 
+/**
+ * @brief Constructor
+ *
+ * @param data Json object with the repository data
+ */
 RepoInfoCheck::RepoInfoCheck(json data)
 {
-	/**
-	 * Constructor
-	 *
-	 * @param data: json object with the repository data
-	 */
 	RepoInfoCheck::data = data;
 }
 
+/**
+ * @brief Check the repository data
+ *
+ * @return bool True if the repository data is valid, False otherwise
+ */
 bool RepoInfoCheck::check()
 {
-	/**
-	 * Check the repository data
-	 *
-	 * @return: true if the repository data is valid, false otherwise
-	 */
 	try
 	{
 		for (string &item : RepoInfoCheck::required)
@@ -42,13 +42,13 @@ bool RepoInfoCheck::check()
 	return true;
 }
 
+/**
+ * @brief Sanitize the repo info
+ *
+ * @return json Object with the sanitized repo info
+ */
 json RepoInfoCheck::sanitize()
 {
-	/**
-	 * Sanitize the repo info
-	 *
-	 * @return: json object with the sanitized repo info
-	 */
 	assert(RepoInfoCheck::check());
 
 	sanitized.clear();
@@ -63,7 +63,7 @@ json RepoInfoCheck::sanitize()
 		{"prefix", ""},
 		{"template", "default"}};
 
-	for (auto const& [key, value] : optional1)
+	for (auto const &[key, value] : optional1)
 	{
 		if (RepoInfoCheck::data[key].is_string())
 			sanitized[key] = RepoInfoCheck::data[key].get<string>();
@@ -76,7 +76,7 @@ json RepoInfoCheck::sanitize()
 		{"isOrg", false},
 		{"private", false}};
 
-	for (auto const& [key, value] : optional2)
+	for (auto const &[key, value] : optional2)
 	{
 		if (RepoInfoCheck::data[key].is_boolean())
 			sanitized[key] = RepoInfoCheck::data[key].get<bool>();
@@ -101,13 +101,13 @@ json RepoInfoCheck::sanitize()
 		}
 
 		string team(sanitized["team"].get<string>());
-		transform(team.begin(), 
-			team.end(), 
-			team.begin(), 
-			[](unsigned char c){
-				return std::tolower(c); 
-			}
-		);
+		transform(team.begin(),
+				  team.end(),
+				  team.begin(),
+				  [](unsigned char c)
+				  {
+					  return std::tolower(c);
+				  });
 		sanitized["team"] = team;
 	}
 
@@ -119,20 +119,21 @@ json RepoInfoCheck::sanitize()
 	sanitized["repo_path"] = repo_path;
 
 #ifdef DEBUG
-	cout << "RepoInfoCheck::sanitize()" << endl << sanitized.dump(4) << endl;
+	cout << "RepoInfoCheck::sanitize()" << endl
+		 << sanitized.dump(4) << endl;
 #endif // DEBUG
 
 	return sanitized;
 }
 
+/**
+ * @brief Sanitize the repo info
+ *
+ * @param data Json object with the repo info
+ * @return json Object with the sanitized repo info
+ */
 json RepoInfoCheck::sanitize(json data)
 {
-	/**
-	 * Sanitize the repo info
-	 *
-	 * @param data: json object with the repo info
-	 * @return: json object with the sanitized repo info
-	 */
 	return RepoInfoCheck(data).sanitize();
 }
 
