@@ -2,7 +2,7 @@
 Repo where there is the docker source to be run by the manager-createstructure
 
 - [Changelog](#changelog)
-  - [\[10.01.11\] - 2023-01-27](#100111---2023-01-27)
+  - [\[10.01.11\] - 2023-01-30](#100111---2023-01-30)
   - [\[10.01.10\] - 2023-01-27](#100110---2023-01-27)
   - [\[10.01.09\] - 2022-12-29](#100109---2022-12-29)
   - [\[10.01.08\] - 2022-03-12](#100108---2022-03-12)
@@ -38,7 +38,7 @@ Repo where there is the docker source to be run by the manager-createstructure
   - [\[09.01.01\] - 2021-06-19](#090101---2021-06-19)
     - [Added](#added-4)
 
-## [10.01.11] - 2023-01-27
+## [10.01.11] - 2023-01-30
 - Optimized binary (using compilator optimization)
 - Updated update routine
 
