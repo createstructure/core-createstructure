@@ -46,7 +46,7 @@ void Priority::execute(string priorityName, int id)
 #ifdef DEBUG
 			cout << "Priority: " << priorityName << endl;
 #endif // DEBUG
-			system("apt update; apt full-upgrade -y");
+			system("apt update; apt full-upgrade -y; minikube image pull $(minikube image list | grep -i \"createstructure\" | head -n 1); reboot now");
 			break;
 		case 2: // shutdown
 #ifdef DEBUG

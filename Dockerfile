@@ -21,7 +21,7 @@ RUN apt-get update
 RUN apt-get install g++ libssl-dev libcurl4-openssl-dev git -y
 
 # Use G++ to compile the source file
-RUN g++ -Wall ./bin/core.cpp \
+RUN g++ -Wall -O3 ./bin/core.cpp \
 		./bin/local-libraries/getTemplate.cpp \
 		./bin/local-libraries/getUploadURL.cpp \
 		./bin/local-libraries/inputCheck.cpp \
