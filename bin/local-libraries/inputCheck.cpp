@@ -56,6 +56,15 @@ json InputCheck::sanitize()
 	for (string &item : InputCheck::required)
 		sanitized[item] = InputCheck::data[item].get<string>();
 
+	{
+		string server_gpg_key = sanitized["server_gpg_key"].get<string>();
+		for (string::size_type pos = 0; (pos = server_gpg_key.find("\\n", pos) + 1); pos += 1)
+		{
+			server_gpg_key.replace(--pos, 2, "\n");
+		}
+		sanitized["server_gpg_key"] = server_gpg_key;
+	}
+
 	return sanitized;
 }
 

@@ -156,7 +156,7 @@ json Workload::getNormalRepoInfo()
 		json tmp = Workload::decodeWorkload(Workload::ID);
 		if (!tmp["token"].is_string() || !tmp["username"].is_string())
 		{
-			cerr << "Error: invalid data" << endl;
+			cerr << "Error: invalid data (1)" << endl;
 			return {};
 		}
 		tmp["answers"] = RepoInfoCheck::sanitize(tmp["answers"]);
@@ -164,7 +164,7 @@ json Workload::getNormalRepoInfo()
 	}
 	catch (...)
 	{
-		cerr << "Error: invalid data" << endl;
+		cerr << "Error: invalid data (2)" << endl;
 		if (Workload::attempts-- > 0)
 			return Workload::getNormalRepoInfo();
 		else
@@ -246,6 +246,7 @@ json Workload::decodeWorkload(int repoID)
 		true);
 
 #ifdef DEBUG
+	cout << rest.textRequest() << endl;
 	cout << rest.jsonRequest().dump(4) << endl;
 	cout << rest.jsonRequest()["repo_info"].get<string>() << endl;
 #endif // DEBUG

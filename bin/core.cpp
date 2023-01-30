@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	 * @param argv: array of arguments passed by command-line
 	 * @return: 0 if the program ends successfully
 	 */
-	// Function viariable(s)
+	// Function variabile(s)
 	json inputs;
 	string path;
 	bool byArg = false;

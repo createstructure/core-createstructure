@@ -37,12 +37,14 @@ Repo::Repo(json data)
 	time(&rawtime);
 	Repo::date = localtime(&rawtime);
 
+#ifndef DEBUG
 	// Save files on RAM
 	system((
 			   string("") +
 			   "mount -o -t tmpfs none " +
 			   Repo::path)
 			   .c_str());
+#endif // DEBUG
 }
 
 /**
